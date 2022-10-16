@@ -1,0 +1,15 @@
+# 目录
+node_modules
+.DS_Store
+.vscode
+dist
+dist-ssr
+old
+cacheDir
+
+# 文件
+.eslintcache
+*.local
+*.log
+logger.js
+demo.js

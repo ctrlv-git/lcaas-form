@@ -1,0 +1,28 @@
+{
+  "name": "lcaas-form-engine",
+  "version": "1.0.0",
+  "keywords": [],
+  "description": "Low code as a service",
+  "author": "yangzhuqing <470704012@qq.com>",
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm --filter @lcaas/form-editor run dev",
+    "build": "pnpm --filter @lcaas/form-editor run build"
+  },
+  "engines": {
+    "node": ">=16.14.0",
+    "npm": ">=8.5.0",
+    "pnpm": ">=8.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.8",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
+    "eslint": "^8.46.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-vue": "^9.16.1",
+    "prettier": "^3.0.1",
+    "typescript": "^5.1.6"
+  }
+}

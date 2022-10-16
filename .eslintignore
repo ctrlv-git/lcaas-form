@@ -1,0 +1,17 @@
+*.sh
+*.md
+*.woff
+*.ttf
+.vscode
+.idea
+.husky
+.local
+Dockerfile
+/bin
+/docs
+
+**/dist/**/*
+**/node_modules/**/*
+**/public/**/*
+/packages/demo/**
+**/*/*.back.vue
