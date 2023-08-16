@@ -55,6 +55,9 @@ importers:
       pinia:
         specifier: ^2.1.6
         version: 2.1.6(typescript@5.1.6)(vue@3.3.4)
+      sortablejs:
+        specifier: ^1.15.0
+        version: 1.15.0
       vue:
         specifier: ^3.3.4
         version: 3.3.4
@@ -2893,6 +2896,10 @@ packages:
       dot-case: 3.0.4
       tslib: 2.6.1
     dev: true
+
+  /sortablejs@1.15.0:
+    resolution: {integrity: sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==}
+    dev: false
 
   /source-map-js@1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}

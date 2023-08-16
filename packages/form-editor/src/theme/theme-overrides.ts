@@ -1,2 +1,25 @@
 import { GlobalThemeOverrides } from 'naive-ui';
-export const themeOverrides: GlobalThemeOverrides = {};
+export const themeOverrides: GlobalThemeOverrides = {
+  common: {
+    primaryColor: '#2486b9',
+    primaryColorHover: '#5AA7D0',
+    primaryColorPressed: '#13638E',
+    primaryColorSuppl: '#5AA7D0',
+    successColor: '#2486b9',
+    successColorHover: '#5AA7D0',
+    successColorPressed: '#13638E',
+    successColorSuppl: '#5AA7D0',
+    infoColor: '#1EC76C',
+    infoColorHover: '#57D994',
+    infoColorPressed: '#0F994F',
+    infoColorSuppl: '#57D994',
+    warningColor: '#FF9C26',
+    warningColorHover: '#FFB967',
+    warningColorPressed: '#C47414',
+    warningColorSuppl: '#FFB967',
+    errorColor: '#AC1F18',
+    errorColorHover: '#C7554F',
+    errorColorPressed: '#84120C',
+    errorColorSuppl: '#C7554F',
+  },
+};
