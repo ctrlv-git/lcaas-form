@@ -1,0 +1,14 @@
+[
+  {
+    "label": "下拉选择",
+    "icon": "select"
+  },
+  {
+    "label": "单选框",
+    "icon": "radio"
+  },
+  {
+    "label": "复选框",
+    "icon": "checkbox"
+  }
+]

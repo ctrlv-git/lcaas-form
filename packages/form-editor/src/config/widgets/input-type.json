@@ -1,0 +1,11 @@
+[
+  {
+    "label": "单行文本",
+    "icon": "input"
+  },
+  {
+    "label": "多行文本",
+    "icon": "textarea"
+  },
+  { "label": "计数器", "icon": "number" }
+]

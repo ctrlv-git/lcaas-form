@@ -57,6 +57,11 @@ export const LcDraggable = defineComponent({
       required: false,
       default: 'div',
     },
+    tagClass: {
+      type: String,
+      required: false,
+      default: 'lc-draggable',
+    },
     transitionGroup: {
       type: Object as PropType<RecordObj>,
       required: false,
@@ -83,8 +88,10 @@ export const LcDraggable = defineComponent({
       // generate children
       const children = computed(() => {
         if (!slots.default) return '';
-        const { modelValue, itemKey } = props;
-        return modelValue.map((val) => h('div', { key: val[itemKey] }, slots.default?.({ element: val })));
+        const { modelValue, itemKey, tagClass } = props;
+        return modelValue.map((val) =>
+          h('div', { key: val[itemKey], class: tagClass }, slots.default?.({ element: val })),
+        );
       });
 
       // render
