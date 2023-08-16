@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/eslintrc.json",
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module"
+  },
+  "extends": [
+    ".eslintrc-auto-import",
+    "eslint:recommended",
+    "plugin:vue/vue3-recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-unused-vars": "off",
+    "vue/multi-word-component-names": ["warn", { "ignores": ["Editor", "Preview", "Page404"] }]
+  }
+}
