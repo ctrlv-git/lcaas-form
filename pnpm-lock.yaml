@@ -40,6 +40,9 @@ importers:
 
   packages/form-editor:
     dependencies:
+      '@ctrlc/mouse-track':
+        specifier: ^1.0.1
+        version: 1.0.1
       '@ctrlc/vite-plugin-vue-svgo':
         specifier: ^1.0.3
         version: 1.0.3(vite@4.4.5)(vue@3.3.4)
@@ -439,6 +442,10 @@ packages:
       vue: ^3.0.11
     dependencies:
       vue: 3.3.4
+    dev: false
+
+  /@ctrlc/mouse-track@1.0.1:
+    resolution: {integrity: sha512-PGoXB9MzFyIu44cvQTC67/TcSTfhHJkXmDgE29g6cleZyit6CGf/2pVxP/8Zfx98/BuqN/Iy99r690/oW3QpQA==}
     dev: false
 
   /@ctrlc/vite-plugin-vue-setup-extend@1.1.0(vite@4.4.5)(vue@3.3.4):

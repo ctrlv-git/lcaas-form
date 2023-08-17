@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ctrlc/mouse-track": "^1.0.1",
     "@ctrlc/vite-plugin-vue-svgo": "^1.0.3",
     "@vicons/ionicons5": "^0.12.0",
     "lodash-es": "^4.17.21",
