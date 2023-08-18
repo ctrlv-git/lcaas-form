@@ -19,5 +19,13 @@
     "@typescript-eslint/no-explicit-any": "off",
     "no-unused-vars": "off",
     "vue/multi-word-component-names": ["warn", { "ignores": ["Editor", "Preview", "Page404"] }]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.vue"],
+      "rules": {
+        "no-undef": "off"
+      }
+    }
+  ]
 }
