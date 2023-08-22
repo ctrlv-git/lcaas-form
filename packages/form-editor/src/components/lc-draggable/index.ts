@@ -1,4 +1,4 @@
-import { defineComponent, h, TransitionGroup, computed, onMounted, unref } from 'vue';
+import { defineComponent, h, computed, onMounted, unref } from 'vue';
 import type { PropType } from 'vue';
 import { useDraggable, onEvents } from './hooks';
 
@@ -42,30 +42,20 @@ type RecordObj = Record<string, any>;
 export const LcDraggable = defineComponent({
   name: 'LcDraggable',
   props: {
-    itemKey: {
-      type: String,
-      required: true,
-      default: '',
-    },
     modelValue: {
       type: Array as PropType<RecordObj[]>,
       required: true,
       default: () => [],
     },
     tag: {
-      type: String,
+      type: [String, Object],
       required: false,
       default: 'div',
     },
-    tagClass: {
+    transitionGroupTag: {
       type: String,
       required: false,
-      default: 'lc-draggable',
-    },
-    transitionGroup: {
-      type: Object as PropType<RecordObj>,
-      required: false,
-      default: undefined,
+      default: 'span',
     },
     config: {
       type: Object as PropType<Partial<SortableAttr>>,
@@ -86,21 +76,30 @@ export const LcDraggable = defineComponent({
 
     return () => {
       // generate children
+      const emptyVNode = slots.empty?.();
+
       const children = computed(() => {
         if (!slots.default) return '';
-        const { modelValue, itemKey, tagClass } = props;
-        return modelValue.map((val) =>
-          h('div', { key: val[itemKey], class: tagClass }, slots.default?.({ element: val })),
-        );
+
+        const { modelValue } = props;
+        // empty
+        if (!modelValue.length) {
+          return emptyVNode;
+        }
+
+        return modelValue.map((val) => slots.default?.({ element: val }));
       });
 
       // render
-      if (props.transitionGroup) {
-        const { tag = 'div', ...transitionGroup } = props.transitionGroup || {};
-        return h(TransitionGroup, { ref: target, tag, ...transitionGroup }, { default: () => unref(children) });
-      } else {
-        return h(props.tag || 'div', { ref: target }, unref(children));
+      const { tag = 'div', transitionGroupTag = 'div' } = props;
+      const attr = { ref: target };
+      if (typeof tag === 'string') {
+        return h(tag, attr, unref(children));
       }
+      if (tag.name === 'TransitionGroup') {
+        attr['tag'] = transitionGroupTag;
+      }
+      return h(tag, attr, { default: () => unref(children) });
     };
   },
 });

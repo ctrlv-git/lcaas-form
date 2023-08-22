@@ -26,7 +26,7 @@ type SortableMethod = {
   [k in (typeof eventsName)[number]]: (...arg) => any;
 };
 type SortableInstance = InstanceType<typeof Sortable>;
-type UseDraggableReturn = [VNodeRef, { init: () => void; sortableInstance: Ref<SortableInstance> }];
+type UseDraggableReturn = [Ref<VNodeRef>, { init: () => void; sortableInstance: Ref<SortableInstance> }];
 //
 export const onEvents = eventsName.reduce((previous, name) => {
   previous[name] = Function;
@@ -40,10 +40,10 @@ export function useDraggable({ props, emit }): UseDraggableReturn {
 
   function init() {
     if (unref(sortableInstance)) unref(sortableInstance).destroy();
-    const dragValue = cloneDeep(modelValue.value);
 
     let el = unref(target);
-    if (props.transitionGroup) {
+
+    if (el.nodeType !== 1) {
       el = el.$el;
     }
 
@@ -52,28 +52,31 @@ export function useDraggable({ props, emit }): UseDraggableReturn {
         // 添加
         const { pullMode, newIndex } = event;
         if (pullMode) {
+          const dragValue = cloneDeep(modelValue.value);
           const chooseData = event.item[dragDataKey];
 
           dragValue.splice(newIndex, 0, chooseData);
           removeNode(event.item);
-          emit('update:modelValue', cloneDeep(dragValue));
+          emit('update:modelValue', dragValue);
         }
       },
       onRemove(event) {
         // 移出
         const { pullMode } = event;
         if (pullMode === true) {
+          const dragValue = cloneDeep(modelValue.value);
           dragValue.splice(event.oldIndex, 1);
-          emit('update:modelValue', cloneDeep(dragValue));
+          emit('update:modelValue', dragValue);
         }
       },
       onEnd(event) {
         const { pullMode, oldIndex, newIndex } = event;
         if (!pullMode) {
+          const dragValue = cloneDeep(modelValue.value);
           // 排序
           const data = dragValue.splice(oldIndex, 1);
           dragValue.splice(newIndex, 0, ...data);
-          emit('update:modelValue', cloneDeep(dragValue));
+          emit('update:modelValue', dragValue);
         }
       },
     };
@@ -90,6 +93,7 @@ export function useDraggable({ props, emit }): UseDraggableReturn {
       ...defaultMethons,
       ...bindEvents,
       onChoose(event) {
+        const dragValue = cloneDeep(modelValue.value);
         let chooseData = dragValue[event.oldIndex];
         if (bindEvents.chooseData) {
           chooseData = bindEvents.chooseData(chooseData, event.oldIndex);
