@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "baseUrl": "./",
+    "composite": true,
+    "isolatedModules": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "strict": true,
+    "target": "ES2020",
+    "useDefineForClassFields": true
+  },
+  "extends": "../../tsconfig.node.json",
+  "include": [
+    "./.build/**/*.ts",
+    "./types/**/*",
+    "package.json",
+    "src/**/*.d.ts",
+    "src/**/*.json",
+    "src/**/*.svg",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "vite.config.ts"
+  ]
+}

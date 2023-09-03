@@ -46,6 +46,9 @@ importers:
       '@ctrlc/vite-plugin-vue-svgo':
         specifier: ^1.0.4
         version: 1.0.4(vite@4.4.5)(vue@3.3.4)
+      '@lcaas/form-render':
+        specifier: workspace:*
+        version: link:../form-render
       '@vicons/ionicons5':
         specifier: ^0.12.0
         version: 0.12.0
@@ -117,7 +120,21 @@ importers:
         specifier: ^1.8.5
         version: 1.8.5(typescript@5.1.6)
 
-  packages/form-render: {}
+  packages/form-render:
+    dependencies:
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.4
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: ^4.2.3
+        version: 4.2.3(vite@4.4.5)(vue@3.3.4)
+      '@vitejs/plugin-vue-jsx':
+        specifier: ^3.0.1
+        version: 3.0.1(vite@4.4.5)(vue@3.3.4)
+      vite:
+        specifier: ^4.4.5
+        version: 4.4.5(@types/node@20.5.0)
 
 packages:
 
@@ -3258,6 +3275,42 @@ packages:
       sass: 1.64.2
     optionalDependencies:
       fsevents: 2.3.2
+
+  /vite@4.4.5(@types/node@20.5.0):
+    resolution: {integrity: sha512-4m5kEtAWHYr0O1Fu7rZp64CfO1PsRGZlD3TAB32UmQlpd7qg15VF7ROqGN5CyqN7HFuwr7ICNM2+fDWRqFEKaA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 20.5.0
+      esbuild: 0.18.20
+      postcss: 8.4.28
+      rollup: 3.28.0
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
 
   /vooks@0.2.12(vue@3.3.4):
     resolution: {integrity: sha512-iox0I3RZzxtKlcgYaStQYKEzWWGAduMmq+jS7OrNdQo1FgGfPMubGL3uGHOU9n97NIvfFDBGnpSvkWyb/NSn/Q==}

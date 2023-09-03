@@ -7,7 +7,8 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm --filter @lcaas/form-editor run dev",
-    "build": "pnpm --filter @lcaas/form-editor run build"
+    "build": "pnpm --filter @lcaas/form-editor run build",
+    "build:render": "pnpm --filter @lcaas/form-render run build"
   },
   "engines": {
     "node": ">=16.14.0",

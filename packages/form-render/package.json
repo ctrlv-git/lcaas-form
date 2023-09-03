@@ -5,13 +5,33 @@
   "description": "Low code as a service",
   "author": "yangzhuqing <470704012@qq.com>",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "types": "./dist/global.d.ts",
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    }
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:dev": "vite build -w",
+    "build": "vite build"
   },
   "engines": {
     "node": ">=16.14.0",
     "npm": ">=8.5.0",
     "pnpm": ">=8.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "vite": "^4.4.5",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vitejs/plugin-vue-jsx": "^3.0.1"
+  }
 }
