@@ -18,6 +18,7 @@
     }
   },
   "scripts": {
+    "eslint": "eslint --ext .js,.ts,.vue src",
     "build:dev": "vite build -w",
     "build": "vite build"
   },

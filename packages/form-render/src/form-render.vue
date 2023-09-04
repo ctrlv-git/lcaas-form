@@ -1,5 +1,5 @@
 <template>
-  <n-form ref="formRef" :model="formValue" :rules="formRules">
+  <form ref="formRef">
     <n-grid v-bind="fromGrid">
       <n-form-item-gi
         v-for="element in conf.items"
@@ -7,14 +7,15 @@
         v-bind="element.__layout__"
         :label="element.label"
       >
-        <form-item :conf="element" v-model:value="formValue[element.__vModel__]"></form-item>
+        <form-item v-model:value="formValue[element.__vModel__]" :conf="element" @update:value="bindUpdate"></form-item>
       </n-form-item-gi>
     </n-grid>
-  </n-form>
+  </form>
 </template>
 
 <script lang="ts">
-import { PropType, ref, computed } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, computed, watch, ref, unref } from 'vue';
 import FormItem from './render/index';
 
 type FormConfig = {
@@ -31,8 +32,8 @@ const fromGridAttr = [
   'xGap',
   'yGap',
 ];
-export default {
-  name: 'FormRender',
+export default defineComponent({
+  name: 'YFormRender',
   components: {
     FormItem,
   },
@@ -46,7 +47,8 @@ export default {
       required: true,
     },
   },
-  setup(props) {
+  emits: ['update:value'],
+  setup(props, { emit }) {
     const formRef = ref();
     const formValue = ref({});
     const formRules = ref({});
@@ -58,16 +60,24 @@ export default {
           obj[attr] = global[attr];
         }
       });
-      console.log(obj, 'obj');
-
       return obj;
     });
+    watch(
+      () => props.value,
+      (val) => {
+        formValue.value = val;
+      },
+    );
+    const bindUpdate = () => {
+      emit('update:value', unref(formValue));
+    };
     return {
       formRef,
       fromGrid,
       formValue,
       formRules,
+      bindUpdate,
     };
   },
-};
+});
 </script>

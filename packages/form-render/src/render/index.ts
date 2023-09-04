@@ -1,5 +1,5 @@
 import { parsePath } from '@/utils/utils';
-import { h, resolveComponent, ConcreteComponent } from 'vue';
+import { defineComponent, h, mergeProps, resolveComponent } from 'vue';
 
 const componentChild = {};
 
@@ -36,19 +36,39 @@ export interface FormItemConf {
   __slot__: any;
 }
 
-export default {
-  name: 'FormItem',
+export default defineComponent({
+  name: 'YFormItem',
   props: {
+    value: {
+      type: [String, Number, Object],
+      required: false,
+      default: undefined,
+    },
     conf: {
       type: Object,
       required: true,
     },
   },
-  setup(props) {
+  emits: ['update:value'],
+  setup(props, { attrs, emit }) {
     const { __config__, tag } = props.conf;
-    const componenSlot = buildSlot(props.conf) || [];
-    const componen = resolveComponent(tag) as ConcreteComponent;
     // 返回渲染函数
-    return () => h(componen, { ...__config__ }, componenSlot);
+    return () => {
+      const componenSlot = buildSlot(props.conf) as any;
+
+      const componen = resolveComponent(tag);
+      const componenProps = mergeProps(
+        {
+          value: props.value,
+          'onUpdate:value': (val) => {
+            emit('update:value', val);
+          },
+        },
+        __config__,
+        attrs,
+      );
+
+      return h(componen, componenProps, componenSlot);
+    };
   },
-};
+});
