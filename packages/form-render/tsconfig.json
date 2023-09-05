@@ -15,12 +15,11 @@
       "@/*": ["src/*"]
     },
     "strict": true,
-    "target": "ES2020",
+    "target": "ESNext",
     "useDefineForClassFields": true
   },
   "extends": "../../tsconfig.node.json",
   "include": [
-    "./.build/**/*.ts",
     "./types/**/*",
     "package.json",
     "src/**/*.d.ts",

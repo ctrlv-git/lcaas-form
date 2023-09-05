@@ -1,27 +1,22 @@
-import { parsePath } from '@/utils/utils';
-import { defineComponent, h, mergeProps, resolveComponent } from 'vue';
-
-const componentChild = {};
-
-const slotsFiles: any = import.meta.glob('./slots/*.ts', { eager: true });
-Object.keys(slotsFiles).forEach((key) => {
-  const slots = slotsFiles[key].default || {};
-  const { name } = parsePath(key);
-  componentChild[name] = slots;
-});
+import { defineComponent, h, mergeProps, resolveComponent, PropType } from 'vue';
+import { componenSlots } from './slots';
 
 function buildSlot(conf) {
   const { tag, __slot__ } = conf;
-  const childObjs = componentChild[tag];
+  const childObjs = componenSlots[tag];
   const childrenSlot = {};
   if (childObjs) {
+    if (childObjs.default && __slot__.default) {
+      childrenSlot['default'] = () => childObjs.default(conf);
+    }
     Object.keys(childObjs).forEach((key) => {
       const childFunc = childObjs[key];
-      if (conf.__slot__ && conf.__slot__[key]) {
+      if (__slot__ && __slot__[key]) {
         childrenSlot[key] = () => childFunc(conf, key);
       }
     });
   }
+
   return childrenSlot;
 }
 
@@ -31,32 +26,33 @@ export interface FormItemConf {
   icon: string;
   __uuid__: string;
   __vModel__: string;
-  __layout__: any;
-  __config__: any;
-  __slot__: any;
+  __layout__: Record<string, unknown>;
+  __config__: Record<string, unknown>;
+  __slot__: Record<string, unknown>;
 }
 
 export default defineComponent({
-  name: 'YFormItem',
+  name: 'LcFormItem',
   props: {
     value: {
-      type: [String, Number, Object],
+      type: [String, Number, Object, Boolean],
       required: false,
       default: undefined,
     },
     conf: {
-      type: Object,
+      type: Object as PropType<FormItemConf>,
       required: true,
     },
   },
   emits: ['update:value'],
   setup(props, { attrs, emit }) {
-    const { __config__, tag } = props.conf;
     // 返回渲染函数
     return () => {
+      const { __config__, tag } = props.conf || {};
       const componenSlot = buildSlot(props.conf) as any;
 
       const componen = resolveComponent(tag);
+
       const componenProps = mergeProps(
         {
           value: props.value,

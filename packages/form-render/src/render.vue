@@ -1,5 +1,5 @@
 <template>
-  <form ref="formRef">
+  <n-form ref="formRef" v-bind="fromGlobal" :model="formValue" :rules="formRules">
     <n-grid v-bind="fromGrid">
       <n-form-item-gi
         v-for="element in conf.items"
@@ -10,18 +10,14 @@
         <form-item v-model:value="formValue[element.__vModel__]" :conf="element" @update:value="bindUpdate"></form-item>
       </n-form-item-gi>
     </n-grid>
-  </form>
+  </n-form>
 </template>
 
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineComponent, computed, watch, ref, unref } from 'vue';
-import FormItem from './render/index';
+import FormItem, { FormItemConf } from './form-item/index';
 
-type FormConfig = {
-  global: Record<string, any>;
-  items: any[];
-};
 const fromGridAttr = [
   'cols',
   'collapsed',
@@ -31,9 +27,32 @@ const fromGridAttr = [
   'itemResponsive',
   'xGap',
   'yGap',
-];
+] as const;
+
+const fromGlobalAttr = [
+  'disabled',
+  'inline',
+  'labelWidth',
+  'labelAlign',
+  'labelPlacement',
+  'showFeedback',
+  'showLabel',
+  'showRequireMark',
+  'requireMarkPlacement',
+  'size',
+] as const;
+
+type FromGridKey = (typeof fromGridAttr)[number];
+type FromGlobalKey = (typeof fromGlobalAttr)[number];
+
+type FormConfig = {
+  fromGrid: Record<FromGridKey, any>;
+  fromGlobal: Record<FromGlobalKey, any>;
+  items: FormItemConf[];
+};
+
 export default defineComponent({
-  name: 'YFormRender',
+  name: 'LcForm',
   components: {
     FormItem,
   },
@@ -51,16 +70,22 @@ export default defineComponent({
   setup(props, { emit }) {
     const formRef = ref();
     const formValue = ref({});
+
     const formRules = ref({});
+
     const fromGrid = computed(() => {
-      const { global } = props.conf;
+      const { fromGrid } = props.conf;
       const obj = {};
       fromGridAttr.forEach((attr) => {
-        if (Object.hasOwn(global, attr)) {
-          obj[attr] = global[attr];
+        if (Object.hasOwn(fromGrid, attr)) {
+          obj[attr] = fromGrid[attr];
         }
       });
       return obj;
+    });
+
+    const fromGlobal = computed(() => {
+      return props.conf.fromGlobal;
     });
     watch(
       () => props.value,
@@ -74,6 +99,7 @@ export default defineComponent({
     return {
       formRef,
       fromGrid,
+      fromGlobal,
       formValue,
       formRules,
       bindUpdate,

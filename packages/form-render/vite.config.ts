@@ -18,7 +18,7 @@ export default (): UserConfig => {
     build: {
       lib: {
         entry: resolve(__dirname, 'src/main.ts'),
-        name: 'FormRender',
+        name: 'LcFormRender',
         fileName: 'index',
       },
       rollupOptions: {
