@@ -1,14 +1,176 @@
-[
-  {
+{
+  "select": {
+    "__uuid__": "",
+    "__vModel__": "",
     "label": "下拉选择",
-    "icon": "select"
+    "tag": "n-select",
+    "__layout__": {},
+    "__config__": {
+      "options": [
+        {
+          "label": "选项一",
+          "value": "1"
+        },
+        {
+          "label": "选项二",
+          "value": "2"
+        }
+      ]
+    },
+    "__slot__": {}
   },
-  {
-    "label": "单选框",
-    "icon": "radio"
+  "cascader": {
+    "__uuid__": "",
+    "__vModel__": "",
+    "label": "级联选择",
+    "tag": "n-cascader",
+    "__layout__": {},
+    "__config__": {
+      "options": [
+        {
+          "label": "选项A",
+          "value": "A",
+          "children": [
+            {
+              "label": "选项A-1",
+              "value": "A-1"
+            },
+            {
+              "label": "选项A-2",
+              "value": "A-2"
+            }
+          ]
+        },
+        {
+          "label": "选项B",
+          "value": "B",
+          "children": [
+            {
+              "label": "选项B-1",
+              "value": "B-1"
+            },
+            {
+              "label": "选项B-2",
+              "value": "B-2"
+            }
+          ]
+        }
+      ]
+    },
+    "__slot__": {}
   },
-  {
+  "radio": {
+    "__uuid__": "",
+    "__vModel__": "",
+    "label": "单选",
+    "tag": "n-radio-group",
+    "__layout__": {},
+    "__config__": {},
+    "__slot__": {
+      "default": {
+        "type": "radio",
+        "space": {},
+        "options": [
+          {
+            "label": "选项一",
+            "value": "1"
+          },
+          {
+            "label": "选项二",
+            "value": "2"
+          }
+        ]
+      }
+    }
+  },
+  "checkbox": {
+    "__uuid__": "",
+    "__vModel__": "",
     "label": "复选框",
-    "icon": "checkbox"
+    "tag": "n-checkbox-group",
+    "__layout__": {},
+    "__config__": {},
+    "__slot__": {
+      "default": {
+        "type": "radio",
+        "space": {},
+        "options": [
+          {
+            "label": "选项一",
+            "value": "1"
+          },
+          {
+            "label": "选项二",
+            "value": "2"
+          }
+        ]
+      }
+    }
+  },
+  "switch": {
+    "__uuid__": "",
+    "__vModel__": "",
+    "label": "开关",
+    "tag": "n-switch",
+    "__layout__": {},
+    "__config__": {},
+    "__slot__": {
+      "checked": "",
+      "unchecked": "",
+      "icon": "",
+      "checked-icon": "",
+      "unchecked-icon": ""
+    }
+  },
+  "slider": {
+    "__uuid__": "",
+    "__vModel__": "",
+    "label": "滑动选择",
+    "tag": "n-slider",
+    "__layout__": {},
+    "__config__": {},
+    "__slot__": {
+      "thumb": ""
+    }
+  },
+  "date": {
+    "__uuid__": "",
+    "__vModel__": "",
+    "label": "日期选择",
+    "tag": "n-date-picker",
+    "__layout__": {},
+    "__config__": {},
+    "__slot__": {}
+  },
+  "time": {
+    "__uuid__": "",
+    "__vModel__": "",
+    "label": "时间选择",
+    "tag": "n-time-picker",
+    "__layout__": {},
+    "__config__": {},
+    "__slot__": {}
+  },
+  "rate": {
+    "__uuid__": "",
+    "__vModel__": "",
+    "label": "评分",
+    "tag": "n-rate",
+    "__layout__": {},
+    "__config__": {},
+    "__slot__": {
+      "default": ""
+    }
+  },
+  "color": {
+    "__uuid__": "",
+    "__vModel__": "",
+    "label": "颜色选择",
+    "tag": "n-color-picker",
+    "__layout__": {},
+    "__config__": {},
+    "__slot__": {
+      "label": ""
+    }
   }
-]
+}

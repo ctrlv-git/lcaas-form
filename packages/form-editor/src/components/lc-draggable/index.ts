@@ -55,7 +55,7 @@ export const LcDraggable = defineComponent({
     transitionGroupTag: {
       type: String,
       required: false,
-      default: 'span',
+      default: 'div',
     },
     config: {
       type: Object as PropType<Partial<SortableAttr>>,

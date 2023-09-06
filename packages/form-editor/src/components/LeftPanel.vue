@@ -8,22 +8,23 @@
     </div>
     <lc-draggable
       v-model="item.list"
-      item-key="label"
       class="components-draggable"
       :config="{ group: { name: refLeftDraggable, pull: 'clone', put: false, revertClone: true }, sort: false }"
       :choose-data="onChoose"
     >
       <template #default="{ element }">
-        <svg-icon :name="element.icon"></svg-icon>
-        <span>{{ element.label }}</span>
+        <div :key="element.label" class="lc-draggable">
+          <svg-icon :name="element.icon"></svg-icon>
+          <span>{{ element.text }}</span>
+        </div>
       </template>
     </lc-draggable>
   </section>
 </template>
 <script setup lang="ts" name="LeftPanel">
-import { shuffle as _shuffle } from 'lodash-es';
-import { refLeftDraggable, genLeftPanelOptions } from '@/config';
-import { getUUID } from '@/utils/utils';
+import { cloneDeep } from 'lodash-es';
+import { refLeftDraggable, genLeftPanelOptions, genWidgetOptions } from '@/config';
+import { getUUID, getUniqueId } from '@/utils/utils';
 import { LcDraggable } from '@/components/lc-draggable';
 
 const leftComponents = ref<any>([]);
@@ -31,9 +32,13 @@ onMounted(async () => {
   leftComponents.value = await genLeftPanelOptions();
 });
 
-const onChoose = (data) => {
-  data.id = getUUID();
-  return data;
+const onChoose = ({ icon }) => {
+  const data = genWidgetOptions(icon);
+  data['__uuid__'] = getUUID();
+  data['__vModel__'] = getUniqueId(`${icon}-`);
+  // TODO
+  data.__layout__.span = 12;
+  return cloneDeep(data);
 };
 </script>
 <style lang="scss" scoped>

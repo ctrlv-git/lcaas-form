@@ -1,0 +1,32 @@
+[
+  {
+    "title": "输入型组件",
+    "list": [
+      {
+        "text": "单行文本",
+        "icon": "input"
+      },
+      {
+        "text": "多行文本",
+        "icon": "textarea"
+      },
+      { "text": "密码", "icon": "password" },
+      { "text": "计数器", "icon": "number" }
+    ]
+  },
+  {
+    "title": "选择型组件",
+    "list": [
+      { "text": "下拉选择", "icon": "select" },
+      { "text": "级联选择", "icon": "cascader" },
+      { "text": "单选", "icon": "radio" },
+      { "text": "复选框", "icon": "checkbox" },
+      { "text": "开关", "icon": "switch" },
+      { "text": "滑动选择", "icon": "slider" },
+      { "text": "日期选择", "icon": "date" },
+      { "text": "时间选择", "icon": "time" },
+      { "text": "评分", "icon": "rate" },
+      { "text": "颜色选择", "icon": "color" }
+    ]
+  }
+]

@@ -1,11 +1,59 @@
-[
-  {
+{
+  "input": {
+    "__uuid__": "",
+    "__vModel__": "",
     "label": "单行文本",
-    "icon": "input"
+    "tag": "n-input",
+    "__layout__": {},
+    "__config__": {},
+    "__slot__": {
+      "prefix": "",
+      "suffix": ""
+    }
   },
-  {
+  "textarea": {
+    "__uuid__": "",
+    "__vModel__": "",
     "label": "多行文本",
-    "icon": "textarea"
+    "tag": "n-input",
+    "__layout__": {},
+    "__config__": {
+      "type": "textarea"
+    },
+    "__slot__": {
+      "prefix": "",
+      "suffix": ""
+    }
   },
-  { "label": "计数器", "icon": "number" }
-]
+  "password": {
+    "__uuid__": "",
+    "__vModel__": "",
+    "label": "密码",
+    "tag": "n-input",
+    "__layout__": {},
+    "__config__": {
+      "type": "password",
+      "show-password-on": "mousedown"
+    },
+    "__slot__": {
+      "prefix": "",
+      "suffix": ""
+    }
+  },
+  "number": {
+    "__uuid__": "",
+    "__vModel__": "",
+    "label": "计数器",
+    "tag": "n-input-number",
+    "__layout__": {
+      "span": ""
+    },
+    "__config__": {},
+    "__slot__": {
+      "add-icon": "",
+      "minus-icon": "",
+      "prefix": "",
+      "suffix": ""
+    }
+  }
+}
