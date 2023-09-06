@@ -2,11 +2,15 @@ import { h, resolveComponent } from 'vue';
 export default {
   default(conf) {
     const {
-      default: { type, options, space },
+      default: { type, options, space: spaceProps },
     } = conf.__slot__;
-    const tagName = type === 'button' ? 'n-radio-button' : 'n-radio';
-    const tag = resolveComponent(tagName);
+    const isBtnTag = type === 'button';
+    const tag = resolveComponent(isBtnTag ? 'n-radio-button' : 'n-radio');
     const NSpace = resolveComponent('n-space');
-    return h(NSpace, space, () => options.map((props) => h(tag, props)));
+    if (isBtnTag) {
+      return options.map((props) => h(tag, props));
+    } else {
+      return h(NSpace, spaceProps, () => options.map((props) => h(tag, props)));
+    }
   },
 };
