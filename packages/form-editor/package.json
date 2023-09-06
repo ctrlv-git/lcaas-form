@@ -14,6 +14,7 @@
   "dependencies": {
     "@ctrlc/mouse-track": "^1.0.2",
     "@ctrlc/vite-plugin-vue-svgo": "^1.0.4",
+    "@lcaas/form-render": "workspace:*",
     "@vicons/ionicons5": "^0.12.0",
     "lodash-es": "^4.17.21",
     "naive-ui": "^2.34.4",

@@ -36,6 +36,26 @@
   height: 100vh;
   margin: 0 350px 0 260px;
   box-sizing: border-box;
+  .center-editor {
+    box-sizing: border-box;
+    padding: var(--height-mini);
+  }
+  .center-row {
+    padding: var(--height-mini);
+    border-radius: var(--border-radius);
+    &:hover {
+      background-color: var(--button-color-2-hover);
+    }
+  }
+  .center-empty {
+    min-height: calc(100vh - 42px);
+    line-height: calc(100vh - 42px);
+    text-align: center;
+    font-size: var(--font-size-huge);
+    color: var(--primary-color);
+    letter-spacing: 4px;
+    user-select: none;
+  }
 }
 
 // app-right
