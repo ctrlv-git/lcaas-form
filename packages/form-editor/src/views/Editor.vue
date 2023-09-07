@@ -57,7 +57,8 @@ import CenterToolbar from '@/components/CenterToolbar.vue';
 import LeftPanel from '@/components/LeftPanel.vue';
 import { LcForm, LcFormItem } from '@lcaas/form-render';
 import { LcDraggable } from '@/components/lc-draggable';
-import { refCenterDraggable, refLeftDraggable } from '@/config';
+import { refCenterDraggable, refLeftDraggable, widgetsConfig } from '@/config';
+import { getUUID, getUniqueId } from '@/utils/utils';
 
 const formRef = ref();
 const formData = ref({});
@@ -79,7 +80,12 @@ const centerDraggableConfig = {
 };
 
 const bindSave = () => {
-  console.log(formData.value, formConfig.value.items);
+  formConfig.value.items = Object.keys(widgetsConfig).map((key) => ({
+    ...widgetsConfig[key],
+    __uuid__: getUUID(),
+    __vModel__: getUniqueId(widgetsConfig[key].tag + Math.random().toString(36).replace('.', '')),
+  }));
+  console.log('widgetsConfig', formConfig.value.items);
 };
 </script>
 <style lang="scss" scoped>
