@@ -12,20 +12,19 @@
       :config="{ group: { name: refLeftDraggable, pull: 'clone', put: false, revertClone: true }, sort: false }"
       :choose-data="onChoose"
     >
-      <template #default="{ element }">
-        <div :key="element.label" class="lc-draggable">
-          <svg-icon :name="element.icon"></svg-icon>
-          <span>{{ element.text }}</span>
-        </div>
-      </template>
+      <div v-for="element in item.list" :key="element.__uuid__" class="lc-draggable">
+        <svg-icon :name="element.icon"></svg-icon>
+        <span>{{ element.text }}</span>
+      </div>
     </lc-draggable>
   </section>
 </template>
+
 <script setup lang="ts" name="LeftPanel">
 import { cloneDeep } from 'lodash-es';
+import { LcDraggable } from '@/components/lc-draggable';
 import { refLeftDraggable, genLeftPanelOptions, genWidgetOptions } from '@/config';
 import { getUUID, getUniqueId } from '@/utils/utils';
-import { LcDraggable } from '@/components/lc-draggable';
 
 const leftComponents = ref<any>([]);
 onMounted(async () => {
@@ -37,10 +36,11 @@ const onChoose = ({ icon }) => {
   data['__uuid__'] = getUUID();
   data['__vModel__'] = getUniqueId(`${icon}-`);
   // TODO
-  data.__layout__.span = 12;
+  data.__layout__.span = 3;
   return cloneDeep(data);
 };
 </script>
+
 <style lang="scss" scoped>
 $halfHeight: calc(var(--height-mini) / 2);
 $halfHeightMin: calc(var(--height-mini) / 4);

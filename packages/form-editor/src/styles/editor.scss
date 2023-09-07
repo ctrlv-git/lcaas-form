@@ -38,6 +38,8 @@
   box-sizing: border-box;
   .center-editor {
     box-sizing: border-box;
+    grid-auto-rows: min-content;
+    min-height: calc(100vh - 42px);
     padding: var(--height-mini);
   }
   .center-row {
@@ -48,8 +50,8 @@
     }
   }
   .center-empty {
-    min-height: calc(100vh - 42px);
-    line-height: calc(100vh - 42px);
+    min-height: calc(100vh - 42px - var(--height-mini) * 2);
+    line-height: calc(100vh - 42px - var(--height-mini) * 2);
     text-align: center;
     font-size: var(--font-size-huge);
     color: var(--primary-color);

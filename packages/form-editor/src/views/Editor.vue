@@ -7,34 +7,34 @@
       </n-scrollbar>
     </div>
     <div class="app-center">
-      <CenterToolbar />
+      <CenterToolbar @on-save="bindSave" />
       <n-scrollbar class="app-panel">
         <n-form ref="formRef" v-bind="formConfig.fromGlobal" :model="formData">
           <lc-draggable
             v-model="formConfig.items"
             v-bind="formConfig.fromGrid"
-            :tag="NGrid"
             :config="centerDraggableConfig"
+            tag="NGrid"
             class="center-editor"
           >
-            <template #default="{ element }">
-              <n-form-item-gi
-                v-bind="element.__layout__"
-                :label="element.label"
-                :show-feedback="false"
-                class="center-row"
-              >
-                <LcFormItem v-model:value="formData[element.__vModel__]" :conf="element" />
-              </n-form-item-gi>
-            </template>
+            <n-form-item-gi
+              v-for="element in formConfig.items"
+              :key="element.__uuid__"
+              v-bind="element.__layout__"
+              :label="element.label"
+              :show-feedback="false"
+              class="center-row"
+            >
+              <LcFormItem v-model:value="formData[element.__vModel__]" :conf="element" />
+            </n-form-item-gi>
+
             <template #empty>
               <n-gi :span="24" class="center-empty" draggable="false">从左侧拖入或点选组件进行表单设计</n-gi>
             </template>
           </lc-draggable>
         </n-form>
-        <n-divider></n-divider>
-        <!--  -->
-        <LcForm v-model:value="formData" class="center-editor" :conf="formConfig" />
+        <!-- <n-divider></n-divider>
+        <LcForm v-model:value="formData" class="center-editor" :conf="formConfig" /> -->
       </n-scrollbar>
     </div>
     <div class="app-right">
@@ -52,31 +52,34 @@
   </n-el>
 </template>
 <script setup lang="ts" name="PageEditor">
-import { NGrid, NGi } from 'naive-ui';
+import type { FormProps, GridProps } from 'naive-ui';
 import CenterToolbar from '@/components/CenterToolbar.vue';
 import LeftPanel from '@/components/LeftPanel.vue';
 import { LcForm, LcFormItem } from '@lcaas/form-render';
 import { LcDraggable } from '@/components/lc-draggable';
 import { refCenterDraggable, refLeftDraggable } from '@/config';
 
-// FormRender.use({ ui: naive, app: 'app' });
 const formRef = ref();
 const formData = ref({});
 const formConfig = ref({
-  fromGrid: {
+  fromGrid: <GridProps>{
     cols: '12',
     xGap: '12',
     yGap: '12',
   },
-  fromGlobal: {
+  fromGlobal: <FormProps>{
     size: 'small',
-    'label-placement': 'left',
+    labelPlacement: 'left',
   },
-  items: [],
+  items: <any[]>[],
 });
 
 const centerDraggableConfig = {
   group: { name: refCenterDraggable, pull: true, put: [refLeftDraggable, refCenterDraggable] },
+};
+
+const bindSave = () => {
+  console.log(formData.value, formConfig.value.items);
 };
 </script>
 <style lang="scss" scoped>

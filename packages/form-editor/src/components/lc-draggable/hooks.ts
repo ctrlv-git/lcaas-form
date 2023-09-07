@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash-es';
 import Sortable from 'sortablejs';
 import type { Ref, VNodeRef } from 'vue';
-import { ref, unref, toRefs } from 'vue';
+import { ref, toRefs, unref } from 'vue';
 import { removeNode, sortableConfig } from './utils';
 
 const dragDataKey = Symbol('dragData');
@@ -41,11 +41,7 @@ export function useDraggable({ props, emit }): UseDraggableReturn {
   function init() {
     if (unref(sortableInstance)) unref(sortableInstance).destroy();
 
-    let el = unref(target);
-
-    if (el.nodeType !== 1) {
-      el = el.$el;
-    }
+    const el = getCurrentInstance()?.vnode.el;
 
     const defaultMethons = {
       onAdd(event) {

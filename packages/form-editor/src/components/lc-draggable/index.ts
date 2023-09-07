@@ -1,6 +1,7 @@
-import { defineComponent, h, computed, onMounted, unref } from 'vue';
 import type { PropType } from 'vue';
-import { useDraggable, onEvents } from './hooks';
+import { defineComponent, h, onMounted, resolveComponent, unref } from 'vue';
+import { onEvents, useDraggable } from './hooks';
+import { isHtmlTag } from './utils';
 
 const attrsName = [
   'group',
@@ -40,7 +41,7 @@ type SortableAttr = {
 type RecordObj = Record<string, any>;
 
 export const LcDraggable = defineComponent({
-  name: 'LcDraggable',
+  name: 'LDraggable',
   props: {
     modelValue: {
       type: Array as PropType<RecordObj[]>,
@@ -48,11 +49,6 @@ export const LcDraggable = defineComponent({
       default: () => [],
     },
     tag: {
-      type: [String, Object],
-      required: false,
-      default: 'div',
-    },
-    transitionGroupTag: {
       type: String,
       required: false,
       default: 'div',
@@ -65,41 +61,33 @@ export const LcDraggable = defineComponent({
     ...onEvents,
   },
   emits: ['update:modelValue'],
-  setup(props, { slots, emit, expose }) {
+  setup(props, { slots, emit, attrs, expose }) {
+    const { tag: tagName } = props;
+    const isTag = isHtmlTag(tagName);
+    let tag: any = tagName;
+    if (!isTag) {
+      tag = resolveComponent(tagName);
+    }
+    //
+    const [ref, { init, sortableInstance }] = useDraggable({ props, emit });
+
     onMounted(() => {
       init();
     });
-    const [target, { init, sortableInstance }] = useDraggable({ props, emit });
+
     expose({
       getInstance: () => unref(sortableInstance),
     });
-
     return () => {
-      // generate children
-      const emptyVNode = slots.empty?.();
-
-      const children = computed(() => {
-        if (!slots.default) return '';
-
-        const { modelValue } = props;
-        // empty
-        if (!modelValue.length) {
-          return emptyVNode;
-        }
-
-        return modelValue.map((val) => slots.default?.({ element: val }));
-      });
-
-      // render
-      const { tag = 'div', transitionGroupTag = 'div' } = props;
-      const attr = { ref: target };
-      if (typeof tag === 'string') {
-        return h(tag, attr, unref(children));
+      const { modelValue } = props;
+      // generate empty children
+      let children: any = isTag ? slots.empty?.() : () => slots.empty?.();
+      // generate  children
+      if (modelValue.length) {
+        children = isTag ? slots.default?.() : () => slots.default?.();
       }
-      if (tag.name === 'TransitionGroup') {
-        attr['tag'] = transitionGroupTag;
-      }
-      return h(tag, attr, { default: () => unref(children) });
+
+      return h(tag, { ...attrs, ref }, children);
     };
   },
 });

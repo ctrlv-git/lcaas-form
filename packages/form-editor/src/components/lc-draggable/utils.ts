@@ -41,3 +41,12 @@ export const sortableConfig = {
 export function removeNode(node: Node) {
   if (node.parentNode) node.parentNode.removeChild(node);
 }
+/**
+ * @description 判断是否是原生html标签名 小写开头
+ * @param {any} str
+ * @returns {boolean}
+ */
+export function isHtmlTag(str) {
+  const tagRegex = /^[a-z][a-z0-9]*$/;
+  return tagRegex.test(str);
+}
