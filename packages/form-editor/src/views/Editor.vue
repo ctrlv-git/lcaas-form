@@ -7,34 +7,44 @@
       </n-scrollbar>
     </div>
     <div class="app-center">
-      <CenterToolbar @on-save="bindSave" />
+      <CenterToolbar :designer="designer" />
       <n-scrollbar class="app-panel">
-        <n-form ref="formRef" v-bind="formConfig.fromGlobal" :model="formData">
+        <n-form ref="elFormRef" v-bind="formConfig.fromGlobal" :model="formData">
           <lc-draggable
-            v-model="formConfig.items"
             v-bind="formConfig.fromGrid"
-            :config="centerDraggableConfig"
+            :model-value="formConfig.items"
+            :config="draggableConfig"
             tag="NGrid"
             class="center-editor"
+            @update:model-value="bindDraggableUpdate"
           >
             <n-form-item-gi
-              v-for="element in formConfig.items"
+              v-for="(element, index) in formConfig.items"
               :key="element.__uuid__"
               v-bind="element.__layout__"
               :label="element.label"
               :show-feedback="false"
-              class="center-row"
+              :class="['center-row', { on: activeWidget?.__uuid__ === element.__uuid__ }]"
+              @click="designer.activeWidget(element)"
             >
               <LcFormItem v-model:value="formData[element.__vModel__]" :conf="element" />
+              <div class="form-tool">
+                <span class="form-tool-btn icon-copy" @click.stop="designer.copyWidget(element)">
+                  <n-icon size="14" :component="CopyOutline"></n-icon>
+                </span>
+                <span class="form-tool-btn icon-delete" @click.stop="designer.deleteWidget(index)">
+                  <n-icon size="14" :component="TrashOutline"></n-icon>
+                </span>
+              </div>
             </n-form-item-gi>
 
             <template #empty>
-              <n-gi :span="24" class="center-empty" draggable="false">从左侧拖入或点选组件进行表单设计</n-gi>
+              <n-gi :span="24" class="center-empty" draggable="false">
+                <n-empty size="huge" description="从左侧选择控件进行表单设计"></n-empty>
+              </n-gi>
             </template>
           </lc-draggable>
         </n-form>
-        <!-- <n-divider></n-divider>
-        <LcForm v-model:value="formData" class="center-editor" :conf="formConfig" /> -->
       </n-scrollbar>
     </div>
     <div class="app-right">
@@ -52,42 +62,36 @@
   </n-el>
 </template>
 <script setup lang="ts" name="PageEditor">
-import type { FormProps, GridProps } from 'naive-ui';
 import CenterToolbar from '@/components/CenterToolbar.vue';
 import LeftPanel from '@/components/LeftPanel.vue';
-import { LcForm, LcFormItem } from '@lcaas/form-render';
 import { LcDraggable } from '@/components/lc-draggable';
 import { refCenterDraggable, refLeftDraggable, widgetsConfig } from '@/config';
-import { getUUID, getUniqueId } from '@/utils/utils';
-
-const formRef = ref();
-const formData = ref({});
-const formConfig = ref({
-  fromGrid: <GridProps>{
-    cols: '12',
-    xGap: '12',
-    yGap: '12',
-  },
-  fromGlobal: <FormProps>{
-    size: 'small',
-    labelPlacement: 'left',
-  },
-  items: <any[]>[],
-});
-
-const centerDraggableConfig = {
+import { useDesigner } from '@/hooks/useDesigner';
+import { LcFormItem } from '@lcaas/form-render';
+import { CopyOutline, TrashOutline } from '@vicons/ionicons5';
+// remove
+import { getUUID, getUniqueId } from '@/utils';
+const draggableConfig = {
   group: { name: refCenterDraggable, pull: true, put: [refLeftDraggable, refCenterDraggable] },
 };
 
-const bindSave = () => {
+const [designer, { formData, formConfig, elFormRef, activeWidget }] = useDesigner();
+
+const bindDraggableUpdate = (items) => {
+  formConfig.value.items = items;
+  designer.storage();
+};
+onMounted(() => {
+  formConfig.value.fromGrid.cols = 6;
   formConfig.value.items = Object.keys(widgetsConfig).map((key) => ({
     ...widgetsConfig[key],
     __uuid__: getUUID(),
     __vModel__: getUniqueId(widgetsConfig[key].tag + Math.random().toString(36).replace('.', '')),
   }));
-  console.log('widgetsConfig', formConfig.value.items);
-};
+  designer.storage();
+});
 </script>
+
 <style lang="scss" scoped>
 @import '@/styles/editor.scss';
 .color-item {

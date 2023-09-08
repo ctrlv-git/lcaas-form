@@ -45,18 +45,56 @@
   .center-row {
     padding: var(--height-mini);
     border-radius: var(--border-radius);
-    &:hover {
+    &:hover,
+    &.on {
       background-color: var(--button-color-2-hover);
+      .form-tool {
+        visibility: visible;
+      }
     }
   }
   .center-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     min-height: calc(100vh - 42px - var(--height-mini) * 2);
-    line-height: calc(100vh - 42px - var(--height-mini) * 2);
     text-align: center;
-    font-size: var(--font-size-huge);
-    color: var(--primary-color);
+    transform: translateY(-10%);
     letter-spacing: 4px;
     user-select: none;
+  }
+  .form-tool {
+    position: absolute;
+    right: calc(-1 * var(--height-mini));
+    top: calc(-1.5 * var(--height-mini));
+    display: flex;
+    visibility: hidden;
+    &-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      border-radius: 50%;
+      margin-right: 2px;
+      cursor: pointer;
+    }
+    .icon-copy {
+      color: var(--primary-color);
+      &:hover {
+        background-color: var(--primary-color);
+        color: #fff;
+      }
+    }
+    .icon-delete {
+      color: var(--error-color);
+      &:hover {
+        background-color: var(--error-color);
+        color: #fff;
+      }
+    }
   }
 }
 

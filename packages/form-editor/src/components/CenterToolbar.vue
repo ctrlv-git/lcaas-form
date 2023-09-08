@@ -45,24 +45,25 @@
 </template>
 <script setup lang="ts" name="CenterToolbar">
 import { ArrowUndoOutline, ArrowRedoOutline, CaretForwardCircleOutline, TrashOutline } from '@vicons/ionicons5';
+import type { FormDesigner } from '@/hooks/useDesigner';
 
 const methodsName = ['undo', 'redo', 'preview', 'empty', 'save'] as const;
 type MethodsType = (typeof methodsName)[number];
 
+export interface Props {
+  designer: FormDesigner;
+}
+const props = withDefaults(defineProps<Props>(), {
+  designer: undefined,
+});
+
 const emit = defineEmits(['onUndo', 'onRedo', 'onPreview', 'onEmpty', 'onSave']);
+
 const bindClick = (type: MethodsType) => {
   const str = type.replace(/^\S/, (s) => s.toUpperCase()) as Capitalize<MethodsType>;
   const key: PadStartCamel<'on', MethodsType> = `on${str}`;
-  methods[type]();
+  props?.designer[type]();
   emit(key);
-};
-
-const methods = {
-  undo: () => {},
-  redo: () => {},
-  preview: () => {},
-  empty: () => {},
-  save: () => {},
 };
 </script>
 <style lang="scss" scoped>
