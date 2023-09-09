@@ -4,7 +4,9 @@
     "__vModel__": "",
     "label": "下拉选择",
     "tag": "n-select",
-    "__layout__": {},
+    "__layout__": {
+      "span": 24
+    },
     "__config__": {
       "options": [
         {
@@ -24,7 +26,9 @@
     "__vModel__": "",
     "label": "级联选择",
     "tag": "n-cascader",
-    "__layout__": {},
+    "__layout__": {
+      "span": 24
+    },
     "__config__": {
       "options": [
         {
@@ -64,7 +68,9 @@
     "__vModel__": "",
     "label": "单选",
     "tag": "n-radio-group",
-    "__layout__": {},
+    "__layout__": {
+      "span": 24
+    },
     "__config__": {},
     "__slot__": {
       "default": {
@@ -88,7 +94,9 @@
     "__vModel__": "",
     "label": "复选框",
     "tag": "n-checkbox-group",
-    "__layout__": {},
+    "__layout__": {
+      "span": 24
+    },
     "__config__": {},
     "__slot__": {
       "default": {
@@ -112,7 +120,9 @@
     "__vModel__": "",
     "label": "开关",
     "tag": "n-switch",
-    "__layout__": {},
+    "__layout__": {
+      "span": 24
+    },
     "__config__": {},
     "__slot__": {
       "checked": "",
@@ -127,7 +137,9 @@
     "__vModel__": "",
     "label": "滑动选择",
     "tag": "n-slider",
-    "__layout__": {},
+    "__layout__": {
+      "span": 24
+    },
     "__config__": {},
     "__slot__": {
       "thumb": ""
@@ -138,7 +150,9 @@
     "__vModel__": "",
     "label": "日期选择",
     "tag": "n-date-picker",
-    "__layout__": {},
+    "__layout__": {
+      "span": 24
+    },
     "__config__": {},
     "__slot__": {}
   },
@@ -147,7 +161,9 @@
     "__vModel__": "",
     "label": "时间选择",
     "tag": "n-time-picker",
-    "__layout__": {},
+    "__layout__": {
+      "span": 24
+    },
     "__config__": {},
     "__slot__": {}
   },
@@ -156,7 +172,9 @@
     "__vModel__": "",
     "label": "评分",
     "tag": "n-rate",
-    "__layout__": {},
+    "__layout__": {
+      "span": 24
+    },
     "__config__": {},
     "__slot__": {
       "default": ""
@@ -167,7 +185,9 @@
     "__vModel__": "",
     "label": "颜色选择",
     "tag": "n-color-picker",
-    "__layout__": {},
+    "__layout__": {
+      "span": 24
+    },
     "__config__": {},
     "__slot__": {
       "label": ""

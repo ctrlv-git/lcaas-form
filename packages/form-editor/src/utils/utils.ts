@@ -66,3 +66,5 @@ export function parsePath(str: string): ParsePath {
     name: name.reverse().join('.'),
   };
 }
+
+export const onlyAllowNumber = (value: string) => !value || /^[1-9]\d*$/.test(value);

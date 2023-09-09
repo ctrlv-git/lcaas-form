@@ -11,8 +11,10 @@ declare global {
     __slot__: Record<string, any>;
   };
   declare type FormConfig = {
+    name: string;
     fromGrid: GridProps;
     fromGlobal: FormProps;
     items: FormItem[];
+    id?: string;
   };
 }

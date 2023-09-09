@@ -26,4 +26,8 @@ export const themeOverrides: GlobalThemeOverrides = {
     errorColorPressed: '#8F3A1E',
     errorColorSuppl: '#F56433',
   },
+  Radio: {
+    buttonColorActive: '#2f59a3',
+    buttonTextColorActive: '#fff',
+  },
 };

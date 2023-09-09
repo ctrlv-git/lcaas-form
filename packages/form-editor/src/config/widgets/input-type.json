@@ -4,7 +4,9 @@
     "__vModel__": "",
     "label": "单行文本",
     "tag": "n-input",
-    "__layout__": {},
+    "__layout__": {
+      "span": 24
+    },
     "__config__": {},
     "__slot__": {
       "prefix": "",
@@ -16,7 +18,9 @@
     "__vModel__": "",
     "label": "多行文本",
     "tag": "n-input",
-    "__layout__": {},
+    "__layout__": {
+      "span": 24
+    },
     "__config__": {
       "type": "textarea"
     },
@@ -30,7 +34,9 @@
     "__vModel__": "",
     "label": "密码",
     "tag": "n-input",
-    "__layout__": {},
+    "__layout__": {
+      "span": 24
+    },
     "__config__": {
       "type": "password",
       "show-password-on": "mousedown"
@@ -46,7 +52,7 @@
     "label": "计数器",
     "tag": "n-input-number",
     "__layout__": {
-      "span": ""
+      "span": 24
     },
     "__config__": {},
     "__slot__": {

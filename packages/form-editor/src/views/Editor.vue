@@ -7,7 +7,7 @@
       </n-scrollbar>
     </div>
     <div class="app-center">
-      <CenterToolbar :designer="designer" />
+      <CenterToolbar :designer="designer" @on-empty="bindTest" />
       <n-scrollbar class="app-panel">
         <n-form ref="elFormRef" v-bind="formConfig.fromGlobal" :model="formData">
           <lc-draggable
@@ -25,7 +25,7 @@
               :label="element.label"
               :show-feedback="false"
               :class="['center-row', { on: activeWidget?.__uuid__ === element.__uuid__ }]"
-              @click="designer.activeWidget(element)"
+              @click="designer.setActiveWidget(element)"
             >
               <LcFormItem v-model:value="formData[element.__vModel__]" :conf="element" />
               <div class="form-tool">
@@ -40,7 +40,7 @@
 
             <template #empty>
               <n-gi :span="24" class="center-empty" draggable="false">
-                <n-empty size="huge" description="从左侧选择控件进行表单设计"></n-empty>
+                <n-empty size="huge" description="从左侧选择控件进行表单设计" />
               </n-gi>
             </template>
           </lc-draggable>
@@ -48,22 +48,14 @@
       </n-scrollbar>
     </div>
     <div class="app-right">
-      <div class="right-tab">
-        <n-tabs justify-content="space-evenly" type="line">
-          <n-tab name="组件属性" />
-          <n-tab name="表单属性" />
-        </n-tabs>
-        <div></div>
-      </div>
-      <n-scrollbar class="app-panel">
-        <!-- TODO -->
-      </n-scrollbar>
+      <RightPanel :designer="designer" :widget="activeWidget" :form="formConfig" />
     </div>
   </n-el>
 </template>
 <script setup lang="ts" name="PageEditor">
 import CenterToolbar from '@/components/CenterToolbar.vue';
 import LeftPanel from '@/components/LeftPanel.vue';
+import RightPanel from '@/components/RightPanel.vue';
 import { LcDraggable } from '@/components/lc-draggable';
 import { refCenterDraggable, refLeftDraggable, widgetsConfig } from '@/config';
 import { useDesigner } from '@/hooks/useDesigner';
@@ -81,8 +73,10 @@ const bindDraggableUpdate = (items) => {
   formConfig.value.items = items;
   designer.storage();
 };
+const bindTest = () => {
+  formConfig.value.fromGrid.xGap = 24;
+};
 onMounted(() => {
-  formConfig.value.fromGrid.cols = 6;
   formConfig.value.items = Object.keys(widgetsConfig).map((key) => ({
     ...widgetsConfig[key],
     __uuid__: getUUID(),

@@ -8,11 +8,11 @@ export type FormDesigner = {
   preview(): void;
   empty(): void;
   save(): void;
-  activeWidget(d: any): void;
+  getActiveWidget(d: any): void;
+  setActiveWidget(d: any): void;
   copyWidget(d: any): void;
   deleteWidget(i: number): void;
   storage(): void;
-  //   go(): void;
 };
 
 type FormObj = {
@@ -21,13 +21,27 @@ type FormObj = {
   formConfig: Ref<FormConfig>;
   activeWidget: Ref<FormItem | undefined>;
 };
+
+const defaultFromGrid = {
+  cols: 24,
+  xGap: 12,
+  yGap: 12,
+};
+
+const defaultFromGlobal = {
+  size: 'medium',
+  labelPlacement: 'left',
+  labelAlign: 'left',
+} as const;
+
 export const useDesigner = (): [FormDesigner, FormObj] => {
   const elFormRef = ref<any>();
   const formData = ref<any>({});
   const activeWidget = ref<FormItem>();
   const formConfig = ref<FormConfig>({
-    fromGrid: {},
-    fromGlobal: {},
+    name: '',
+    fromGrid: defaultFromGrid,
+    fromGlobal: defaultFromGlobal,
     items: [],
   });
   const log = new OperationLog(50);
@@ -50,9 +64,12 @@ export const useDesigner = (): [FormDesigner, FormObj] => {
       }
     },
     save() {
-      console.log('widgetsConfig', formData.value, formConfig.value.items);
+      console.log('widgetsConfig', formData.value, formConfig.value);
     },
-    activeWidget(element) {
+    getActiveWidget() {
+      return activeWidget;
+    },
+    setActiveWidget(element) {
       activeWidget.value = element;
     },
     copyWidget(element) {
