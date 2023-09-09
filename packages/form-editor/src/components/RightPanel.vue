@@ -7,10 +7,7 @@
   <n-scrollbar class="app-panel">
     <div class="right-content">
       <template v-if="currentTab === 'widget'">
-        <div v-if="widget">
-          {{ form.items.length }}
-          <br />
-        </div>
+        <WidgetSetting v-if="widgetRef" v-model:widget="widgetRef"></WidgetSetting>
         <n-empty v-else size="huge" description="未选择控件"></n-empty>
       </template>
       <template v-if="currentTab === 'form'">
@@ -38,10 +35,7 @@
           </n-radio-group>
         </n-form-item>
         <n-form-item label="标签宽度" label-placement="left">
-          <n-input-group>
-            <n-input v-model:value="labelWidth" :allow-input="onlyAllowNumber" />
-            <n-select v-model:value="labelWidthUnit" :style="{ width: '10em' }" :options="pixelOptions" />
-          </n-input-group>
+          <InputUnit v-model:value="formRef.fromGlobal.labelWidth" :options="pixelOptions"></InputUnit>
         </n-form-item>
         <n-form-item label="栅格间隔" label-placement="left">
           <n-input-number v-model:value="gap" button-placement="both" :precision="0" step="1" max="999" />
@@ -54,8 +48,7 @@
 <script setup lang="ts" name="RightPanel">
 import type { FormDesigner } from '@/hooks/useDesigner';
 import { sizesEnum, labelPlacementEnum, labelAlignEnum, pixelEnum } from '@/config/enum';
-import { onlyAllowNumber } from '@/utils';
-
+import WidgetSetting from './WidgetSetting/WidgetSetting.vue';
 export interface Props {
   designer: FormDesigner;
   form: FormConfig;
@@ -70,36 +63,17 @@ const tabMap = {
   widget: '组件属性',
   form: '表单属性',
 };
-const currentTab = ref<keyof typeof tabMap>('form');
-const pixelOptions = pixelEnum.map((key) => ({ label: key, value: key }));
+const currentTab = ref<keyof typeof tabMap>('widget');
+
 //
 const { form: formRef, widget: widgetRef } = toRefs(props);
 // watch([props.widget, props.form], ([widgetVal, formVal]) => {
 //   widgetRef.value = widgetVal as FormItem;
 //   formRef.value = formVal as FormConfig;
 // });
-// 标签宽度
-const labelWidth = computed({
-  get() {
-    const { labelWidth = '' } = props.form.fromGlobal;
-    return ('' + labelWidth).replaceAll(/[a-zA-Z]*/g, '');
-  },
-  set(val) {
-    const { fromGlobal } = toRefs(props.form);
-    fromGlobal.value.labelWidth = val ? `${val}${labelWidthUnit.value}` : '';
-  },
-});
-const labelWidthUnit = computed({
-  get() {
-    const { labelWidth = '' } = props.form.fromGlobal;
-    return ('' + labelWidth).replaceAll(/[0-9]*/g, '') || 'px';
-  },
-  set(val) {
-    const { fromGlobal } = toRefs(props.form);
-    fromGlobal.value.labelWidth = labelWidth.value ? `${labelWidth.value}${val}` : '';
-  },
-});
 
+// 标签宽度
+const pixelOptions = pixelEnum.map((key) => ({ label: key, value: key }));
 // 栅格设置
 const gap = computed({
   get() {
@@ -110,14 +84,9 @@ const gap = computed({
     fromGrid.value.xGap = fromGrid.value.yGap = val;
   },
 });
-
-console.log(JSON.stringify({ a: undefined, b: null }));
 </script>
 
 <style lang="scss" scoped>
-$halfHeight: calc(var(--height-mini) / 2);
-$halfHeightMin: calc(var(--height-mini) / 4);
-
 .right-tab {
   box-sizing: border-box;
   height: 42px;
