@@ -6,6 +6,7 @@ declare global {
     __vModel__: string;
     label: string;
     tag: string;
+    tagType: string;
     __layout__: Record<string, any>;
     __config__: Record<string, any>;
     __slot__: Record<string, any>;
