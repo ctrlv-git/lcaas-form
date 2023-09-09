@@ -3,5 +3,6 @@ _cache_vite/
 
 # 文件
 .eslintrc-auto-import.json
+tsconfig.tsbuildinfo
 types/auto-imports.d.ts
 types/auto-components.d.ts
