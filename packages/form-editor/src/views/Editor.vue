@@ -57,7 +57,7 @@ import CenterToolbar from '@/components/CenterToolbar.vue';
 import LeftPanel from '@/components/LeftPanel.vue';
 import RightPanel from '@/components/RightPanel.vue';
 import { LcDraggable } from '@/components/lc-draggable';
-import { refCenterDraggable, refLeftDraggable, widgetsConfig } from '@/config';
+import { refCenterDraggable, refLeftDraggable, renderConfig } from '@/config';
 import { useDesigner } from '@/hooks/useDesigner';
 import { LcFormItem } from '@lcaas/form-render';
 import { CopyOutline, TrashOutline } from '@vicons/ionicons5';
@@ -77,10 +77,10 @@ const bindTest = () => {
   formConfig.value.fromGrid.xGap = 24;
 };
 onMounted(() => {
-  formConfig.value.items = Object.keys(widgetsConfig).map((key) => ({
-    ...widgetsConfig[key],
+  formConfig.value.items = Object.keys(renderConfig).map((key) => ({
+    ...renderConfig[key],
     __uuid__: getUUID(),
-    __vModel__: getUniqueId(widgetsConfig[key].tag + Math.random().toString(36).replace('.', '')),
+    __vModel__: getUniqueId(renderConfig[key].tag + Math.random().toString(36).replace('.', '')),
   }));
   designer.storage();
 });

@@ -23,12 +23,12 @@
 <script setup lang="ts" name="LeftPanel">
 import { cloneDeep } from 'lodash-es';
 import { LcDraggable } from '@/components/lc-draggable';
-import { refLeftDraggable, genLeftPanelOptions, genWidgetOptions } from '@/config';
+import { refLeftDraggable, genLeftPanelConfig, genWidgetOptions } from '@/config';
 import { getUUID, getUniqueId } from '@/utils/utils';
 
 const leftComponents = ref<any>([]);
 onMounted(async () => {
-  leftComponents.value = await genLeftPanelOptions();
+  leftComponents.value = await genLeftPanelConfig();
 });
 
 const onChoose = ({ icon }) => {

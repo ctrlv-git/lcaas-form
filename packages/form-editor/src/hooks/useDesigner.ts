@@ -64,7 +64,7 @@ export const useDesigner = (): [FormDesigner, FormObj] => {
       }
     },
     save() {
-      console.log('widgetsConfig', formData.value, formConfig.value);
+      console.log('widgets-Config', formData.value, formConfig.value);
     },
     getActiveWidget() {
       return activeWidget;
