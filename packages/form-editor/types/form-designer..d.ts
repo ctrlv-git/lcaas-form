@@ -18,4 +18,8 @@ declare global {
     items: FormItem[];
     id?: string;
   };
+  declare type LabelValue = {
+    label: string;
+    value: any;
+  };
 }

@@ -68,3 +68,17 @@ export function parsePath(str: string): ParsePath {
 }
 
 export const onlyAllowNumber = (value: string) => !value || /^[1-9]\d*$/.test(value);
+
+/**
+ * Description 数组分段
+ * @param {any} array
+ * @param {any} chunkSize=1
+ * @returns {any}
+ */
+export function chunkArray<T = any>(array: T[], chunkSize = 1) {
+  const results = <T[][]>[];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    results.push(array.slice(i, i + chunkSize));
+  }
+  return results;
+}

@@ -1,11 +1,11 @@
 <template>
   <n-form class="widget-setting" :model="props.widget">
-    <n-collapse default-expanded-names="1" accordion>
-      <n-collapse-item title="基础属性" name="1">
-        <WidgetItem v-for="field in common" :key="field.label" :field="field" :model="props.widget"></WidgetItem>
+    <n-collapse default-expanded-names="extendConfig" accordion>
+      <n-collapse-item title="基础属性" name="commonConfig">
+        <WidgetItem v-for="field in commonConfig" :key="field.label" :field="field" :model="props.widget"></WidgetItem>
       </n-collapse-item>
-      <n-collapse-item title="高级属性" name="2">
-        <div>Java</div>
+      <n-collapse-item title="高级属性" name="extendConfig">
+        <WidgetItem v-for="field in extendConfig" :key="field.label" :field="field" :model="props.widget"></WidgetItem>
       </n-collapse-item>
       <n-collapse-item title="校验规则" name="3">
         <div>Java</div>
@@ -25,7 +25,13 @@ export interface Props {
 const props = withDefaults(defineProps<Props>(), {
   widget: undefined,
 });
-const { common } = fieldsConfig;
+const { common: commonConfig } = fieldsConfig;
+
+const extendConfig = computed(() => {
+  const { tagType } = props.widget;
+  return fieldsConfig[tagType];
+});
+console.log('fields-Config', props.widget, extendConfig.value);
 </script>
 
 <style lang="scss" scoped></style>

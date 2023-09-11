@@ -78,11 +78,6 @@ import {
   createDiscreteApi,
 } from 'naive-ui';
 
-import InputUnit from '@/components/InputUnit.vue';
-const globalComponent = {
-  InputUnit: InputUnit,
-};
-
 const naive = create({
   components: [
     NAlert,
@@ -171,7 +166,4 @@ export function setupNaiveUi(app: App) {
   window['$message'] = message;
   window['$asideApp'] = asideApp;
   app.use(naive);
-  Object.keys(globalComponent).forEach((name) => {
-    app.component(name, globalComponent[name]);
-  });
 }
