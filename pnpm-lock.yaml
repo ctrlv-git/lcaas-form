@@ -49,7 +49,7 @@ importers:
       '@lcaas/form-render':
         specifier: workspace:*
         version: link:../form-render
-      '@vicons/ionicons5':
+      '@vicons/ionicons4':
         specifier: ^0.12.0
         version: 0.12.0
       lodash-es:
@@ -987,8 +987,8 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
-  /@vicons/ionicons5@0.12.0:
-    resolution: {integrity: sha512-Iy1EUVRpX0WWxeu1VIReR1zsZLMc4fqpt223czR+Rpnrwu7pt46nbnC2ycO7ItI/uqDLJxnbcMC7FujKs9IfFA==}
+  /@vicons/ionicons4@0.12.0:
+    resolution: {integrity: sha512-i+7YwlpCrqD6m9esbZLy1bpVQlh4CKugtS3OzgfNw6BLTQQK6HT7drktaJgcESj/BTr4avdNbAtMQXx56wSVMg==}
     dev: false
 
   /@vitejs/plugin-vue-jsx@3.0.1(vite@4.4.5)(vue@3.3.4):

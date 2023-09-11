@@ -30,10 +30,10 @@
               <LcFormItem v-model:value="formData[element.__vModel__]" :conf="element" />
               <div class="form-tool">
                 <span class="form-tool-btn icon-copy" @click.stop="designer.copyWidget(element)">
-                  <n-icon size="14" :component="CopyOutline"></n-icon>
+                  <n-icon size="16" :component="MdCopy"></n-icon>
                 </span>
                 <span class="form-tool-btn icon-delete" @click.stop="designer.deleteWidget(index)">
-                  <n-icon size="14" :component="TrashOutline"></n-icon>
+                  <n-icon size="16" :component="MdTrash"></n-icon>
                 </span>
               </div>
             </n-form-item-gi>
@@ -60,7 +60,7 @@ import { LcDraggable } from '@/components/lc-draggable';
 import { refCenterDraggable, refLeftDraggable, renderConfig } from '@/config';
 import { useDesigner } from '@/hooks/useDesigner';
 import { LcFormItem } from '@lcaas/form-render';
-import { CopyOutline, TrashOutline } from '@vicons/ionicons5';
+import { MdCopy, MdTrash } from '@vicons/ionicons4';
 // remove
 import { getUUID, getUniqueId } from '@/utils';
 const draggableConfig = {
@@ -82,6 +82,7 @@ onMounted(() => {
     __uuid__: getUUID(),
     __vModel__: getUniqueId(renderConfig[key].tag + Math.random().toString(36).replace('.', '')),
   }));
+  //   formConfig.value.items = [formConfig.value.items[0], formConfig.value.items[1]];
   designer.storage();
 });
 </script>

@@ -1,15 +1,21 @@
-import { vicons as ionicons5 } from '@/config';
+import { vicons as ionicons4 } from '@/config';
 import { chunkArray } from '@/utils';
 import { NGi, NGrid, NIcon } from 'naive-ui';
 
-const vicons = Object.values(ionicons5);
+const vicons = Object.values(ionicons4);
 
 export default defineComponent({
   name: 'VIcons',
+  props: {
+    size: {
+      type: Number,
+      default: 100,
+    },
+  },
   emits: ['select'],
   setup(props, { emit }) {
     const children = shallowRef<any[]>([]);
-    const arr = chunkArray(Object.values(vicons), 200);
+    const arr = chunkArray(Object.values(vicons), props.size);
     const render = () => {
       children.value = [...children.value, ...(arr.shift() as any)];
 
@@ -28,7 +34,7 @@ export default defineComponent({
       return h(
         NGrid,
         {
-          cols: 12,
+          cols: 10,
           xGap: 2,
           yGap: 2,
         },

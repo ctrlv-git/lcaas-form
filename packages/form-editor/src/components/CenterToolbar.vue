@@ -4,7 +4,7 @@
       <template #icon>
         <n-tooltip>
           <template #trigger>
-            <n-icon :component="ArrowUndoOutline"></n-icon>
+            <n-icon :component="IosUndo"></n-icon>
           </template>
           撤销
         </n-tooltip>
@@ -14,7 +14,7 @@
       <template #icon>
         <n-tooltip>
           <template #trigger>
-            <n-icon :component="ArrowRedoOutline"></n-icon>
+            <n-icon :component="IosRedo"></n-icon>
           </template>
           恢复
         </n-tooltip>
@@ -24,7 +24,7 @@
       <template #icon>
         <n-tooltip>
           <template #trigger>
-            <n-icon :component="CaretForwardCircleOutline"></n-icon>
+            <n-icon :component="MdPlayCircle"></n-icon>
           </template>
           预览
         </n-tooltip>
@@ -34,7 +34,7 @@
       <template #icon>
         <n-tooltip>
           <template #trigger>
-            <n-icon :component="TrashOutline"></n-icon>
+            <n-icon :component="MdTrash"></n-icon>
           </template>
           清空
         </n-tooltip>
@@ -44,7 +44,7 @@
   </div>
 </template>
 <script setup lang="ts" name="CenterToolbar">
-import { ArrowUndoOutline, ArrowRedoOutline, CaretForwardCircleOutline, TrashOutline } from '@vicons/ionicons5';
+import { IosUndo, IosRedo, MdPlayCircle, MdTrash } from '@vicons/ionicons4';
 import type { FormDesigner } from '@/hooks/useDesigner';
 
 const methodsName = ['undo', 'redo', 'preview', 'empty', 'save'] as const;

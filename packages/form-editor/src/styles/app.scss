@@ -46,6 +46,7 @@
   cursor: pointer;
   &-text {
     width: 100%;
+    text-align: center;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;

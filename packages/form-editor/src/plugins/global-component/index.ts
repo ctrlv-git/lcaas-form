@@ -1,5 +1,5 @@
 import type { App } from 'vue';
-import { vicons as ionicons5 } from '@/config';
+import { vicons } from '@/config';
 
 const globalComponent = {};
 const componentModule: any = import.meta.glob('@/components/global/*.vue', { eager: true });
@@ -15,7 +15,7 @@ export function setupGlobalComponent(app: App) {
     app.component(name, globalComponent[name]);
   });
 
-  Object.values(ionicons5).map((vicon) => {
+  Object.values(vicons).map((vicon) => {
     app.component(vicon.name, vicon);
   });
 }
