@@ -6,6 +6,8 @@ import AutoImport from 'unplugin-auto-import/vite';
 export const AutoImportPlugin = () => {
   return AutoImport({
     dts: 'types/auto-imports.d.ts',
+    exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/, /[\\/]form-render[\\/]/],
+    // ignore: ['h'],
     imports: ['vue', 'pinia', 'vue-router'],
     eslintrc: {
       enabled: true,
