@@ -1,13 +1,18 @@
 import { defineComponent, h, mergeProps, resolveComponent, PropType } from 'vue';
 import { componenSlots } from './slots';
 
-function buildSlot(conf) {
+function buildSlot(conf, componenProps) {
   const { tag, __slot__ } = conf;
   const childObjs = componenSlots[tag];
   const childrenSlot = {};
+
+  if (tag === 'n-input-group') {
+    return () => childObjs.default(conf, componenProps);
+  }
+
   if (childObjs) {
     if (childObjs.default && __slot__.default) {
-      childrenSlot['default'] = () => childObjs.default(conf);
+      childrenSlot['default'] = () => childObjs.default(conf, componenProps);
     }
     Object.keys(childObjs).forEach((key) => {
       const childFunc = childObjs[key];
@@ -16,7 +21,6 @@ function buildSlot(conf) {
       }
     });
   }
-
   return childrenSlot;
 }
 
@@ -49,7 +53,6 @@ export default defineComponent({
     // 返回渲染函数
     return () => {
       const { __config__, tag } = props.conf || {};
-      const componenSlot = buildSlot(props.conf) as any;
 
       const componen = resolveComponent(tag);
 
@@ -63,6 +66,8 @@ export default defineComponent({
         __config__,
         attrs,
       );
+
+      const componenSlot = buildSlot(props.conf, componenProps) as any;
 
       return h(componen, componenProps, componenSlot);
     };
