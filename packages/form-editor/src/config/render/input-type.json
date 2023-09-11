@@ -3,15 +3,19 @@
     "__uuid__": "",
     "__vModel__": "",
     "label": "单行文本",
-    "tag": "n-input",
+    "tag": "n-input-group",
     "tagType": "input",
     "__layout__": {
       "span": 24
     },
     "__config__": {},
     "__slot__": {
-      "prefix": "",
-      "suffix": ""
+      "default": {
+        "prefix": "",
+        "suffix": ""
+      },
+      "preLabel": "",
+      "sufLabel": ""
     }
   },
   "textarea": {
@@ -45,7 +49,7 @@
       "show-password-on": "mousedown"
     },
     "__slot__": {
-      "prefix": "",
+      "prefix": "Airplane",
       "suffix": ""
     }
   },
