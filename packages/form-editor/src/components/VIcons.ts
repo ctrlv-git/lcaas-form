@@ -1,9 +1,8 @@
-import * as ionicons5 from '@vicons/ionicons5';
-import { NIcon, NGi, NGrid } from 'naive-ui';
-import { h } from 'vue';
+import { vicons as ionicons5 } from '@/config';
 import { chunkArray } from '@/utils';
+import { NGi, NGrid, NIcon } from 'naive-ui';
+
 const vicons = Object.values(ionicons5);
-console.log('VIcons');
 
 export default defineComponent({
   name: 'VIcons',
@@ -13,7 +12,7 @@ export default defineComponent({
     const arr = chunkArray(Object.values(vicons), 200);
     const render = () => {
       children.value = [...children.value, ...(arr.shift() as any)];
-      console.log('arr.length', arr.length);
+
       if (arr.length) {
         requestAnimationFrame(() => {
           render();
