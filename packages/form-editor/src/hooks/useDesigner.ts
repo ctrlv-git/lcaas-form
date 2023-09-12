@@ -1,5 +1,6 @@
-import { getUUID, getUniqueId, OperationLog } from '@/utils';
-import { defaultFromGrid, defaultFromGlobal } from '@/config';
+import { defaultFromGlobal, defaultFromGrid } from '@/config';
+import { OperationLog, getUUID, getUniqueId } from '@/utils';
+import { cloneDeep } from 'lodash-es';
 import type { Ref } from 'vue';
 
 export type FormDesigner = {
@@ -28,7 +29,7 @@ export const useDesigner = (): [FormDesigner, FormObj] => {
   const formData = ref<any>({});
   const activeWidget = ref<FormItem>();
   const formConfig = ref<FormConfig>({
-    name: '',
+    name: 'naiveui 表单',
     fromGrid: defaultFromGrid,
     fromGlobal: defaultFromGlobal,
     items: [],
@@ -66,7 +67,7 @@ export const useDesigner = (): [FormDesigner, FormObj] => {
     },
     copyWidget(element) {
       const data = {
-        ...element,
+        ...cloneDeep(element),
         __uuid__: getUUID(),
         __vModel__: getUniqueId(element.tag),
       };
