@@ -6,6 +6,7 @@
         :key="element.__uuid__"
         v-bind="element.__layout__"
         :label="element.label"
+        :path="element.__vModel__"
       >
         <form-item v-model:value="formValue[element.__vModel__]" :conf="element" @update:value="bindUpdate"></form-item>
       </n-form-item-gi>
@@ -15,9 +16,9 @@
 
 <script lang="ts">
 import type { PropType } from 'vue';
-import { defineComponent, computed, watch, ref, unref } from 'vue';
+import { defineComponent, computed, ref, unref } from 'vue';
 import FormItem, { FormItemConf } from './form-item/index';
-
+import { parseRules } from './utils/utils';
 const fromGridAttr = [
   'cols',
   'collapsed',
@@ -67,12 +68,21 @@ export default defineComponent({
     },
   },
   emits: ['update:value'],
-  setup(props, { emit }) {
+  setup(props, { emit, expose }) {
     const formRef = ref();
-    const formValue = ref({});
-
-    const formRules = ref({});
-
+    const formValue = computed({
+      get() {
+        return props.value;
+      },
+      set(val) {
+        emit('update:value', val);
+      },
+    });
+    const formRules = computed(() => {
+      const { items } = props.conf;
+      const rules = parseRules(items);
+      return rules;
+    });
     const fromGrid = computed(() => {
       const { fromGrid } = props.conf;
       const obj = {};
@@ -83,19 +93,22 @@ export default defineComponent({
       });
       return obj;
     });
-
     const fromGlobal = computed(() => {
       return props.conf.fromGlobal;
     });
-    watch(
-      () => props.value,
-      (val) => {
-        formValue.value = val;
-      },
-    );
+
     const bindUpdate = () => {
       emit('update:value', unref(formValue));
     };
+    expose({
+      formRef,
+      validate(...arg) {
+        return formRef.value?.validate(...arg);
+      },
+      reset() {
+        formRef.value?.restoreValidation();
+      },
+    });
     return {
       formRef,
       fromGrid,

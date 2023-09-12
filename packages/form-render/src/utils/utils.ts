@@ -1,3 +1,5 @@
+import { unref } from 'vue';
+import type { FormItemConf } from '../form-item/index';
 /**
  * @description 根据文件路径
  * @returns {any}
@@ -19,4 +21,23 @@ export function parsePath(str: string): ParsePath {
     ext: `.${ext}`,
     name: name.reverse().join('.'),
   };
+}
+
+export function parseRules(arr: FormItemConf[]) {
+  if (!unref(arr).length) return {};
+  return unref(arr).reduce((previous, current) => {
+    const { __vModel__, __config__, label } = current;
+    const rules: any[] = [];
+    if (__config__.required) {
+      rules.push({
+        required: true,
+        message: `${label}必须填写`,
+        trigger: 'blur',
+      });
+    }
+    return {
+      ...previous,
+      [__vModel__]: rules,
+    };
+  }, {});
 }
