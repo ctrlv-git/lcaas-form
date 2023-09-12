@@ -1,0 +1,1 @@
+import{_ as e}from"./index-8633b10d.js";import{o as r,aG as o}from"./vendor-794c00e2.js";const c={};function t(n,a){return r(),o("div",null,"Preview")}const f=e(c,[["render",t]]);export{f as default};
