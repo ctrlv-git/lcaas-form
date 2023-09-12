@@ -44,6 +44,7 @@ export default defineComponent({
 
     const setFieldValue = (path, val) => {
       const { model } = toRefs(props);
+
       if (path.includes('.')) {
         const attrs = path.split('.');
 
@@ -69,6 +70,7 @@ export default defineComponent({
     const { FormItem, getFieldValue, setFieldValue, field } = setup;
     const fieldTag = resolveComponent(field.component) as any;
     const slot = genSlot[fieldTag.name] && genSlot[fieldTag.name](field.slot);
+
     return h(
       FormItem,
       {
@@ -83,6 +85,9 @@ export default defineComponent({
             ...field.props,
             value: getFieldValue(field.path),
             'onUpdate:value': (val) => {
+              Object.values(field.emits || '').forEach((fn: any) => {
+                fn(setup.model, val);
+              });
               setFieldValue(field.path, val);
             },
           },

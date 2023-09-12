@@ -9,7 +9,7 @@
     <div class="app-center">
       <CenterToolbar :designer="designer" @on-empty="bindTest" />
       <n-scrollbar class="app-panel">
-        <n-form ref="elFormRef" v-bind="formConfig.fromGlobal" :model="formData">
+        <n-form ref="elFormRef" v-bind="formConfig.fromGlobal" :model="formData" :rules="formRules">
           <lc-draggable
             v-bind="formConfig.fromGrid"
             :model-value="formConfig.items"
@@ -24,6 +24,7 @@
               v-bind="element.__layout__"
               :label="element.label"
               :show-feedback="false"
+              :path="element.__vModel__"
               :class="['center-row', { on: activeWidget?.__uuid__ === element.__uuid__ }]"
               @click="designer.setActiveWidget(element)"
             >
@@ -59,16 +60,20 @@ import RightPanel from '@/components/RightPanel.vue';
 import { LcDraggable } from '@/components/lc-draggable';
 import { refCenterDraggable, refLeftDraggable, renderConfig } from '@/config';
 import { useDesigner } from '@/hooks/useDesigner';
-import { LcFormItem } from '@lcaas/form-render';
+import { LcFormItem, parseRules } from '@lcaas/form-render';
 import { MdCopy, MdTrash } from '@vicons/ionicons4';
 // remove
 import { getUUID, getUniqueId } from '@/utils';
+import { cloneDeep } from 'lodash-es';
 const draggableConfig = {
   group: { name: refCenterDraggable, pull: true, put: [refLeftDraggable, refCenterDraggable] },
 };
 
 const [designer, { formData, formConfig, elFormRef, activeWidget }] = useDesigner();
-
+const formRules = computed(() => {
+  const { items } = formConfig.value;
+  return parseRules(items);
+});
 const bindDraggableUpdate = (items) => {
   formConfig.value.items = items;
   designer.storage();
@@ -82,7 +87,14 @@ onMounted(() => {
     __uuid__: getUUID(),
     __vModel__: getUniqueId(renderConfig[key].tag + Math.random().toString(36).replace('.', '')),
   }));
-  //   formConfig.value.items = [formConfig.value.items[0], formConfig.value.items[1]];
+  formConfig.value.items = [
+    cloneDeep(formConfig.value.items[0]),
+    {
+      ...formConfig.value.items[0],
+      __uuid__: getUUID(),
+      __vModel__: getUniqueId(),
+    },
+  ];
   designer.storage();
 });
 </script>

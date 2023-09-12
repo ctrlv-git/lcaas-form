@@ -46,10 +46,11 @@ export function genWidgetOptions(key) {
 }
 
 /* ******表单控件属性编辑配置****** */
-const fieldsModule: any = import.meta.glob('./fields/*.json', { eager: true });
+const fieldsModule: any = import.meta.glob('./fields/*.ts', { eager: true });
 const fieldsConfig: Record<string, any> = {};
 Object.keys(fieldsModule).forEach((key) => {
-  const mod = fieldsModule[key].default || {};
+  const mod = fieldsModule[key] || {};
   Object.assign(fieldsConfig, mod);
 });
+
 export { fieldsConfig };

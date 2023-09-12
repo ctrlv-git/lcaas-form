@@ -1,13 +1,14 @@
 import { getUUID, getUniqueId, OperationLog } from '@/utils';
-
+import { defaultFromGrid, defaultFromGlobal } from '@/config';
 import type { Ref } from 'vue';
 
 export type FormDesigner = {
   undo(): void;
   redo(): void;
-  preview(): void;
+  preview(d: any): void;
   empty(): void;
   save(): void;
+  getConf(): FormConfig;
   getActiveWidget(d: any): void;
   setActiveWidget(d: any): void;
   copyWidget(d: any): void;
@@ -21,18 +22,6 @@ type FormObj = {
   formConfig: Ref<FormConfig>;
   activeWidget: Ref<FormItem | undefined>;
 };
-
-const defaultFromGrid = {
-  cols: 24,
-  xGap: 12,
-  yGap: 12,
-};
-
-const defaultFromGlobal = {
-  size: 'medium',
-  labelPlacement: 'left',
-  labelAlign: 'left',
-} as const;
 
 export const useDesigner = (): [FormDesigner, FormObj] => {
   const elFormRef = ref<any>();
@@ -54,8 +43,8 @@ export const useDesigner = (): [FormDesigner, FormObj] => {
       const data = log.go(1);
       formConfig.value.items = data;
     },
-    preview() {
-      console.log('preview-add', log, log.step);
+    preview(state) {
+      state.value = true;
     },
     empty() {
       if (formConfig.value.items.length) {
@@ -65,6 +54,9 @@ export const useDesigner = (): [FormDesigner, FormObj] => {
     },
     save() {
       console.log('widgets-Config', formData.value, formConfig.value);
+    },
+    getConf() {
+      return formConfig.value;
     },
     getActiveWidget() {
       return activeWidget;

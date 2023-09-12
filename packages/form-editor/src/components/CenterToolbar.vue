@@ -42,10 +42,29 @@
     </n-button>
     <n-button size="small" type="primary" @click="bindClick('save')">保存</n-button>
   </div>
+  <n-modal
+    v-model:show="showModal"
+    size="small"
+    preset="card"
+    title="选择图标"
+    :mask-closable="false"
+    style="width: 920px"
+  >
+    <n-scrollbar style="max-height: 600px; padding-right: 10px">
+      <LcForm ref="formRef" v-model:value="formData" class="preview-form" :conf="formConfig"></LcForm>
+    </n-scrollbar>
+    <template #footer>
+      <n-button-group>
+        <n-button type="primary" tertiary @click="bindSubmit">提交</n-button>
+        <n-button type="info" tertiary @click="bindReset">重置</n-button>
+      </n-button-group>
+    </template>
+  </n-modal>
 </template>
 <script setup lang="ts" name="CenterToolbar">
 import { IosUndo, IosRedo, MdPlayCircle, MdTrash } from '@vicons/ionicons4';
 import type { FormDesigner } from '@/hooks/useDesigner';
+import { LcForm } from '@lcaas/form-render';
 
 const methodsName = ['undo', 'redo', 'preview', 'empty', 'save'] as const;
 type MethodsType = (typeof methodsName)[number];
@@ -62,8 +81,29 @@ const emit = defineEmits(['onUndo', 'onRedo', 'onPreview', 'onEmpty', 'onSave'])
 const bindClick = (type: MethodsType) => {
   const str = type.replace(/^\S/, (s) => s.toUpperCase()) as Capitalize<MethodsType>;
   const key: PadStartCamel<'on', MethodsType> = `on${str}`;
-  props?.designer[type]();
+  formConfig.value = props?.designer.getConf();
+  props?.designer[type](showModal);
   emit(key);
+};
+/* ******* */
+const showModal = ref(false);
+const formRef = ref();
+const formData = ref({});
+const formConfig = ref({});
+const bindReset = () => {
+  formRef.value.reset();
+};
+const bindSubmit = () => {
+  const { validate } = formRef.value;
+  validate((errors) => {
+    if (!errors) {
+      window.$message.success('Valid');
+    } else {
+      console.error(errors);
+      window.$message.error('Invalid');
+    }
+  });
+  console.log(formData.value, formRef.value);
 };
 </script>
 <style lang="scss" scoped>
@@ -79,5 +119,8 @@ const bindClick = (type: MethodsType) => {
   > .n-button {
     margin-left: 8px;
   }
+}
+.preview-form {
+  padding: 20px;
 }
 </style>

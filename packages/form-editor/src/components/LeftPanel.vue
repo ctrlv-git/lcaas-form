@@ -32,12 +32,11 @@ onMounted(async () => {
 });
 
 const onChoose = ({ icon }) => {
-  const data = genWidgetOptions(icon);
+  const data = cloneDeep(genWidgetOptions(icon));
   data['__uuid__'] = getUUID();
   data['__vModel__'] = getUniqueId(`${icon}-`);
-  // TODO
-  data.__layout__.span = 3;
-  return cloneDeep(data);
+  data.__layout__.span = 24;
+  return data;
 };
 </script>
 

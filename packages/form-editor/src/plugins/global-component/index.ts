@@ -8,7 +8,6 @@ Object.keys(componentModule).forEach((key) => {
   const mod = componentModule[key].default || {};
   globalComponent[mod.name] = mod;
 });
-console.log(globalComponent);
 
 export function setupGlobalComponent(app: App) {
   Object.keys(globalComponent).forEach((name) => {

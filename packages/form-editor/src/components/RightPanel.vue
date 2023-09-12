@@ -7,7 +7,7 @@
   <n-scrollbar class="app-panel">
     <div class="right-content">
       <template v-if="currentTab === 'widget'">
-        <WidgetSetting v-if="widgetRef" v-model:widget="widgetRef"></WidgetSetting>
+        <WidgetSetting v-if="widgetRef" :key="widgetRef.__uuid__" v-model:widget="widgetRef"></WidgetSetting>
         <n-empty v-else size="huge" description="未选择控件"></n-empty>
       </template>
       <template v-if="currentTab === 'form'">
