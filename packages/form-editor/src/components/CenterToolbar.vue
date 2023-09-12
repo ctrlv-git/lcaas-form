@@ -44,10 +44,11 @@
   </div>
   <n-modal
     v-model:show="showModal"
+    :mask-closable="false"
+    :on-after-leave="() => (formData = {})"
     size="small"
     preset="card"
     title="选择图标"
-    :mask-closable="false"
     style="width: 920px"
   >
     <n-scrollbar style="max-height: 600px; padding-right: 10px">
@@ -95,15 +96,8 @@ const bindReset = () => {
 };
 const bindSubmit = () => {
   const { validate } = formRef.value;
-  validate((errors) => {
-    if (!errors) {
-      window.$message.success('Valid');
-    } else {
-      console.error(errors);
-      window.$message.error('Invalid');
-    }
-  });
-  console.log(formData.value, formRef.value);
+  validate();
+  console.log('表单提交信息:', toRaw(formData.value), '表单配置信息:', toRaw(formConfig.value));
 };
 </script>
 <style lang="scss" scoped>

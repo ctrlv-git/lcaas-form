@@ -6,7 +6,7 @@
     label-placement="left"
     :show-feedback="false"
   >
-    <n-collapse default-expanded-names="commonConfig" accordion>
+    <n-collapse default-expanded-names="commonConfig">
       <n-collapse-item title="基础属性" name="commonConfig">
         <WidgetItem v-for="field in commonConfig" :key="field.label" :field="field" :model="props.widget"></WidgetItem>
       </n-collapse-item>
