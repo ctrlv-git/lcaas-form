@@ -87,14 +87,23 @@
             "value": "em",
             "label": "em"
           }
-        ]
+        ],
+        "clearable": true
       }
+    },
+    {
+      "label": "展示星号",
+      "path": "__layout__.show-require-mark",
+      "component": "n-switch",
+      "props": {}
     },
     {
       "label": "默认值",
       "path": "__config__.defaultValue",
       "component": "n-input",
-      "props": {}
+      "props": {
+        "clearable": true
+      }
     },
     {
       "label": "禁用",

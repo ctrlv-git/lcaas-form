@@ -40,6 +40,16 @@
         <n-form-item label="栅格间隔" label-placement="left">
           <n-input-number v-model:value="gap" button-placement="both" :precision="0" step="1" max="999" />
         </n-form-item>
+        <n-form-item label="星号位置" label-placement="left">
+          <n-radio-group v-model:value="formRef.fromGlobal.requireMarkPlacement" name="radiobuttongroup1">
+            <n-radio-button
+              v-for="size in markPlacementEnum"
+              :key="size.value"
+              :value="size.value"
+              :label="size.label"
+            />
+          </n-radio-group>
+        </n-form-item>
       </template>
     </div>
   </n-scrollbar>
@@ -47,7 +57,7 @@
 
 <script setup lang="ts" name="RightPanel">
 import type { FormDesigner } from '@/hooks/useDesigner';
-import { sizesEnum, labelPlacementEnum, labelAlignEnum, pixelEnum } from '@/config/enum';
+import { sizesEnum, labelPlacementEnum, labelAlignEnum, markPlacementEnum, pixelEnum } from '@/config/enum';
 import WidgetSetting from './WidgetSetting/WidgetSetting.vue';
 export interface Props {
   designer: FormDesigner;

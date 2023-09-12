@@ -1,6 +1,6 @@
 <template>
   <n-input-group>
-    <n-input v-model:value="labelValue" :allow-input="onlyAllowNumber">
+    <n-input v-model:value="labelValue" v-bind="$attrs" :allow-input="onlyAllowNumber">
       <template #suffix>
         {{ suffix }}
       </template>

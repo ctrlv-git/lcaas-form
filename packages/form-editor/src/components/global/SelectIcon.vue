@@ -17,7 +17,7 @@
         <n-input v-model:value="searchModal"></n-input>
       </div>
     </template>
-    <n-scrollbar style="max-height: 800px">
+    <n-scrollbar style="max-height: 800px; padding-right: 10px">
       <VIcons @select="onSelectIcon"></VIcons>
     </n-scrollbar>
   </n-modal>

@@ -34,3 +34,18 @@ export const labelAlignEnum = [
   },
 ];
 export const pixelEnum = ['px', 'em'];
+
+export const markPlacementEnum = [
+  {
+    value: 'left',
+    label: '左侧',
+  },
+  {
+    value: 'right',
+    label: '右侧',
+  },
+  {
+    value: 'right-hanging',
+    label: '右侧悬挂',
+  },
+];
