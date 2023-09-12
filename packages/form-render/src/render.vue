@@ -81,6 +81,7 @@ export default defineComponent({
     const formRules = computed(() => {
       const { items } = props.conf;
       const rules = parseRules(items);
+      !initState && initData();
       return rules;
     });
     const fromGrid = computed(() => {
@@ -96,6 +97,22 @@ export default defineComponent({
     const fromGlobal = computed(() => {
       return props.conf.fromGlobal;
     });
+
+    let initState = false;
+    const initData = () => {
+      const {
+        conf: { items },
+        value,
+      } = props;
+      formValue.value = items.reduce((previous, current) => {
+        const { __vModel__ } = current;
+        return {
+          [__vModel__]: undefined,
+          ...previous,
+        };
+      }, value ?? {});
+      initState = true;
+    };
 
     const bindUpdate = () => {
       emit('update:value', unref(formValue));

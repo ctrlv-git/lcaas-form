@@ -2,6 +2,8 @@ import { parsePath } from '@/utils';
 
 export * from './defaultFrom';
 
+export * from './enum';
+
 export * as vicons from '@vicons/ionicons4';
 
 export const refLeftDraggable = Symbol('leftDraggable');

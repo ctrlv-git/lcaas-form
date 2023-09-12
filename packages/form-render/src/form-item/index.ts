@@ -25,14 +25,15 @@ function buildSlot(conf, componenProps) {
 }
 
 export interface FormItemConf {
-  label: string;
-  tag: string;
-  icon: string;
   __uuid__: string;
   __vModel__: string;
+  label: string;
+  tag: string;
+  tagType: string;
   __layout__: Record<string, unknown>;
   __config__: Record<string, unknown>;
   __slot__: Record<string, unknown>;
+  __rules__: Record<string, unknown>[];
 }
 
 export default defineComponent({

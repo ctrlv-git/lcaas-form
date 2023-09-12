@@ -76,7 +76,6 @@ export default defineComponent({
       {
         label: field.label,
         path: field.path,
-        'label-placement': 'left',
       },
       () =>
         h(

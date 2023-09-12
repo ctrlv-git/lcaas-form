@@ -58,13 +58,11 @@ import CenterToolbar from '@/components/CenterToolbar.vue';
 import LeftPanel from '@/components/LeftPanel.vue';
 import RightPanel from '@/components/RightPanel.vue';
 import { LcDraggable } from '@/components/lc-draggable';
-import { refCenterDraggable, refLeftDraggable, renderConfig } from '@/config';
+import { refCenterDraggable, refLeftDraggable } from '@/config';
 import { useDesigner } from '@/hooks/useDesigner';
 import { LcFormItem, parseRules } from '@lcaas/form-render';
 import { MdCopy, MdTrash } from '@vicons/ionicons4';
-// remove
-import { getUUID, getUniqueId } from '@/utils';
-import { cloneDeep } from 'lodash-es';
+
 const draggableConfig = {
   group: { name: refCenterDraggable, pull: true, put: [refLeftDraggable, refCenterDraggable] },
 };
@@ -81,22 +79,6 @@ const bindDraggableUpdate = (items) => {
 const bindTest = () => {
   formConfig.value.fromGrid.xGap = 24;
 };
-onMounted(() => {
-  formConfig.value.items = Object.keys(renderConfig).map((key) => ({
-    ...renderConfig[key],
-    __uuid__: getUUID(),
-    __vModel__: getUniqueId(renderConfig[key].tag + Math.random().toString(36).replace('.', '')),
-  }));
-  formConfig.value.items = [
-    cloneDeep(formConfig.value.items[0]),
-    {
-      ...formConfig.value.items[0],
-      __uuid__: getUUID(),
-      __vModel__: getUniqueId(),
-    },
-  ];
-  designer.storage();
-});
 </script>
 
 <style lang="scss" scoped>

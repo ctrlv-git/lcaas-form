@@ -8,5 +8,5 @@ export const defaultFromGlobal = {
   size: 'medium',
   labelPlacement: 'left',
   labelAlign: 'left',
-  requireMarkPlacement: 'right',
+  requireMarkPlacement: 'right-hanging',
 } as const;

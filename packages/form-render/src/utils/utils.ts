@@ -26,7 +26,7 @@ export function parsePath(str: string): ParsePath {
 export function parseRules(arr: FormItemConf[]) {
   if (!unref(arr).length) return {};
   return unref(arr).reduce((previous, current) => {
-    const { __vModel__, __config__, label } = current;
+    const { __vModel__, __config__, label, __rules__ } = current;
     const rules: any[] = [];
     if (__config__.required) {
       rules.push({
@@ -35,6 +35,22 @@ export function parseRules(arr: FormItemConf[]) {
         trigger: 'blur',
       });
     }
+
+    if (__rules__?.length) {
+      __rules__.forEach((item) => {
+        if (item.pattern) {
+          rules.push({
+            validator: (_rule, val) => {
+              const reg = new RegExp((item.pattern as string).slice(1, -1));
+              return reg.test(val);
+            },
+            message: item.message || `${label}错误`,
+            trigger: 'blur',
+          });
+        }
+      });
+    }
+
     return {
       ...previous,
       [__vModel__]: rules,

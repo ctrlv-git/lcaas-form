@@ -49,6 +49,7 @@ export const useDesigner = (): [FormDesigner, FormObj] => {
     },
     empty() {
       if (formConfig.value.items.length) {
+        activeWidget.value = undefined;
         formConfig.value.items = [];
         designer.storage();
       }

@@ -17,7 +17,7 @@
       "preLabel": "",
       "sufLabel": ""
     },
-    "__rule__": {}
+    "__rules__": []
   },
   "textarea": {
     "__uuid__": "",
@@ -34,7 +34,8 @@
     "__slot__": {
       "prefix": "",
       "suffix": ""
-    }
+    },
+    "__rules__": []
   },
   "password": {
     "__uuid__": "",
@@ -52,7 +53,8 @@
     "__slot__": {
       "prefix": "",
       "suffix": ""
-    }
+    },
+    "__rules__": []
   },
   "number": {
     "__uuid__": "",
@@ -69,6 +71,7 @@
       "minus-icon": "",
       "prefix": "",
       "suffix": ""
-    }
+    },
+    "__rules__": []
   }
 }

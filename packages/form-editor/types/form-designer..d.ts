@@ -10,6 +10,7 @@ declare global {
     __layout__: Record<string, any>;
     __config__: Record<string, any>;
     __slot__: Record<string, any>;
+    __rules__: Record<string, any>[];
   };
   declare type FormConfig = {
     name: string;
