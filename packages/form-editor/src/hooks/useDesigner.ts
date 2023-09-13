@@ -34,31 +34,32 @@ export const useDesigner = (): [FormDesigner, FormObj] => {
     fromGlobal: defaultFromGlobal,
     items: [],
   });
-  const log = new OperationLog(50);
+  // 历史记录
+  const history = new OperationLog(50);
   const designer: FormDesigner = {
     undo() {
-      const data = log.go(-1);
-      formConfig.value.items = data;
+      const data = history.go(-1);
+      unref(formConfig).items = data;
     },
     redo() {
-      const data = log.go(1);
-      formConfig.value.items = data;
+      const data = history.go(1);
+      unref(formConfig).items = data;
     },
-    preview(state) {
-      state.value = true;
+    preview(callback) {
+      callback(true);
     },
     empty() {
-      if (formConfig.value.items.length) {
+      if (unref(formConfig).items.length) {
         activeWidget.value = undefined;
-        formConfig.value.items = [];
+        unref(formConfig).items = [];
         designer.storage();
       }
     },
     save() {
-      console.log('widgets-Config', formData.value, formConfig.value);
+      console.log('widgets-Config', formData.value, unref(formConfig));
     },
     getConf() {
-      return formConfig.value;
+      return unref(formConfig);
     },
     getActiveWidget() {
       return activeWidget;
@@ -72,14 +73,19 @@ export const useDesigner = (): [FormDesigner, FormObj] => {
         __uuid__: getUUID(),
         __vModel__: getUniqueId(element.tag),
       };
-      formConfig.value.items.push(data);
+      activeWidget.value = data;
+      unref(formConfig).items.push(data);
+      designer.storage();
     },
     deleteWidget(index) {
-      formConfig.value.items.splice(index, 1);
+      if (unref(activeWidget) === unref(formConfig).items[index]) {
+        activeWidget.value = unref(formConfig).items[0];
+      }
+      unref(formConfig).items.splice(index, 1);
       designer.storage();
     },
     storage() {
-      log.push(formConfig.value.items);
+      history.push(unref(formConfig).items);
     },
   };
 

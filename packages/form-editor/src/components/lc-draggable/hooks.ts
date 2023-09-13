@@ -48,19 +48,19 @@ export function useDraggable({ props, emit }): UseDraggableReturn {
         // 添加
         const { pullMode, newIndex } = event;
         if (pullMode) {
-          const dragValue = cloneDeep(modelValue.value);
+          const dragValue = cloneDeep(unref(modelValue));
           const chooseData = event.item[dragDataKey];
 
           dragValue.splice(newIndex, 0, chooseData);
           removeNode(event.item);
-          emit('update:modelValue', dragValue);
+          emit('update:modelValue', dragValue, chooseData);
         }
       },
       onRemove(event) {
         // 移出
         const { pullMode } = event;
         if (pullMode === true) {
-          const dragValue = cloneDeep(modelValue.value);
+          const dragValue = cloneDeep(unref(modelValue));
           dragValue.splice(event.oldIndex, 1);
           emit('update:modelValue', dragValue);
         }
@@ -68,11 +68,11 @@ export function useDraggable({ props, emit }): UseDraggableReturn {
       onEnd(event) {
         const { pullMode, oldIndex, newIndex } = event;
         if (!pullMode) {
-          const dragValue = cloneDeep(modelValue.value);
+          const dragValue = cloneDeep(unref(modelValue));
           // 排序
           const data = dragValue.splice(oldIndex, 1);
           dragValue.splice(newIndex, 0, ...data);
-          emit('update:modelValue', dragValue);
+          emit('update:modelValue', dragValue, dragValue[newIndex]);
         }
       },
     };
@@ -89,7 +89,7 @@ export function useDraggable({ props, emit }): UseDraggableReturn {
       ...defaultMethons,
       ...bindEvents,
       onChoose(event) {
-        const dragValue = cloneDeep(modelValue.value);
+        const dragValue = cloneDeep(unref(modelValue));
         let chooseData = dragValue[event.oldIndex];
         if (bindEvents.chooseData) {
           chooseData = bindEvents.chooseData(chooseData, event.oldIndex);

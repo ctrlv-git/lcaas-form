@@ -83,7 +83,11 @@ const bindClick = (type: MethodsType) => {
   const str = type.replace(/^\S/, (s) => s.toUpperCase()) as Capitalize<MethodsType>;
   const key: PadStartCamel<'on', MethodsType> = `on${str}`;
   formConfig.value = props?.designer.getConf();
-  props?.designer[type](showModal);
+  props?.designer[type]((...arg) => {
+    if (type === 'preview') {
+      showModal.value = arg[0];
+    }
+  });
   emit(key);
 };
 /* ******* */

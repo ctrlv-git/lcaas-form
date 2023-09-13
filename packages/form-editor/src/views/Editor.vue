@@ -7,7 +7,7 @@
       </n-scrollbar>
     </div>
     <div class="app-center">
-      <CenterToolbar :designer="designer" @on-empty="bindTest" />
+      <CenterToolbar :designer="designer" />
       <n-scrollbar class="app-panel">
         <n-form ref="elFormRef" v-bind="formConfig.fromGlobal" :model="formData" :rules="formRules">
           <lc-draggable
@@ -69,15 +69,13 @@ const draggableConfig = {
 
 const [designer, { formData, formConfig, elFormRef, activeWidget }] = useDesigner();
 const formRules = computed(() => {
-  const { items } = formConfig.value;
+  const { items } = unref(formConfig);
   return parseRules(items);
 });
-const bindDraggableUpdate = (items) => {
-  formConfig.value.items = items;
+const bindDraggableUpdate = (items, element) => {
+  unref(formConfig).items = items;
+  designer.setActiveWidget(element);
   designer.storage();
-};
-const bindTest = () => {
-  formConfig.value.fromGrid.xGap = 24;
 };
 </script>
 
