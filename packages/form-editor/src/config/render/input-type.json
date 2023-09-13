@@ -29,7 +29,11 @@
       "span": 24
     },
     "__config__": {
-      "type": "textarea"
+      "type": "textarea",
+      "autosize": {
+        "minRows": 3,
+        "maxRows": 3
+      }
     },
     "__slot__": {
       "prefix": "",
@@ -41,7 +45,7 @@
     "__uuid__": "",
     "__vModel__": "",
     "label": "密码",
-    "tag": "n-input",
+    "tag": "n-input-group",
     "tagType": "password",
     "__layout__": {
       "span": 24
@@ -51,8 +55,13 @@
       "show-password-on": "mousedown"
     },
     "__slot__": {
-      "prefix": "",
-      "suffix": ""
+      "default": {
+        "prefix": "",
+        "password-invisible-icon": "",
+        "password-visible-icon": ""
+      },
+      "preLabel": "",
+      "sufLabel": ""
     },
     "__rules__": []
   },

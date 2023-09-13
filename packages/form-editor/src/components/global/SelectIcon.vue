@@ -1,6 +1,6 @@
 <template>
   <n-input-group>
-    <n-input v-model:value="labelValue" readonly placeholder="请选择"></n-input>
+    <n-input v-model:value="labelValue" clearable readonly placeholder="请选择" v-bind="$attrs"></n-input>
     <n-button type="primary" @click="() => (showModal = true)">选择</n-button>
   </n-input-group>
   <n-modal
@@ -22,7 +22,7 @@
     </n-scrollbar>
   </n-modal>
 </template>
-<script setup lang="ts" name="SelectIcon">
+<script setup lang="ts" name="SelectIcon" inheritAttrs="false">
 interface Props {
   value: any;
 }

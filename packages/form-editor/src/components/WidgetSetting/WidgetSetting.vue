@@ -1,12 +1,6 @@
 <template>
-  <n-form
-    class="widget-setting"
-    :model="props.widget"
-    label-width="5.5em"
-    label-placement="left"
-    :show-feedback="false"
-  >
-    <n-collapse default-expanded-names="commonConfig">
+  <n-form class="widget-setting" :model="props.widget" label-width="6em" label-placement="left" :show-feedback="false">
+    <n-collapse default-expanded-names="extendConfig">
       <n-collapse-item title="基础属性" name="commonConfig">
         <WidgetItem v-for="field in commonConfig" :key="field.label" :field="field" :model="props.widget"></WidgetItem>
       </n-collapse-item>
