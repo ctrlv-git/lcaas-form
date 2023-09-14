@@ -7,8 +7,9 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm --filter @lcaas/form-editor run dev",
-    "build": "pnpm --filter @lcaas/form-editor run build",
-    "build:render": "pnpm --filter @lcaas/form-render run build"
+    "build": "pnpm --filter ./packages/** run build",
+    "build:render": "pnpm --filter @lcaas/form-render run build",
+    "lint": "pnpm --filter ./packages/** run lint"
   },
   "engines": {
     "node": ">=16.14.0",
@@ -16,14 +17,14 @@
     "pnpm": ">=8.0.0"
   },
   "devDependencies": {
-    "@types/node": "^20.5.0",
-    "@typescript-eslint/eslint-plugin": "^6.4.0",
-    "@typescript-eslint/parser": "^6.4.0",
-    "eslint": "^8.47.0",
+    "@types/node": "^20.6.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-vue": "^9.17.0",
-    "prettier": "^3.0.2",
-    "typescript": "^5.1.6"
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
   }
 }
