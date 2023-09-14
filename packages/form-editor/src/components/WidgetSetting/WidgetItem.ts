@@ -13,6 +13,12 @@ const genSlot = {
       return h(NSpace, spaceProps, () => options.map((props) => h(tag, props)));
     }
   },
+  CheckboxGroup(conf) {
+    const { options, space: spaceProps } = conf;
+    const tag = resolveComponent('n-checkbox');
+    const NSpace = resolveComponent('n-space');
+    return h(NSpace, spaceProps, () => options.map((props) => h(tag, props)));
+  },
 };
 
 export default defineComponent({
@@ -20,6 +26,10 @@ export default defineComponent({
   props: {
     field: {
       type: Object as PropType<Record<string, any>>,
+      default: () => ({}),
+    },
+    fields: {
+      type: Object as PropType<Record<string, any>[]>,
       default: () => ({}),
     },
     model: {
@@ -76,6 +86,12 @@ export default defineComponent({
       {
         label: field.label,
         path: field.path,
+        labelStyle:
+          field.label.length > 5
+            ? {
+                fontSize: '12px',
+              }
+            : {},
       },
       () =>
         h(
@@ -83,9 +99,16 @@ export default defineComponent({
           {
             ...field.props,
             value: getFieldValue(field.path),
+            'onUpdate:checked': (val) => {
+              // 复选框
+              Object.values(field.emits || '').forEach((fn: any) => {
+                fn(val, setup.model, setup.fields);
+              });
+              setFieldValue(field.path, val);
+            },
             'onUpdate:value': (val) => {
               Object.values(field.emits || '').forEach((fn: any) => {
-                fn(setup.model, val);
+                fn(val, setup.model, setup.fields);
               });
               setFieldValue(field.path, val);
             },

@@ -1,10 +1,10 @@
 {
-  "select": {
+  "Select": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "下拉选择",
     "tag": "n-select",
-    "tagType": "select",
+    "tagType": "Select",
     "__layout__": {
       "span": 24
     },
@@ -22,12 +22,12 @@
     },
     "__slot__": {}
   },
-  "cascader": {
+  "Cascader": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "级联选择",
     "tag": "n-cascader",
-    "tagType": "cascader",
+    "tagType": "Cascader",
     "__layout__": {
       "span": 24
     },
@@ -65,12 +65,12 @@
     },
     "__slot__": {}
   },
-  "radio": {
+  "Radio": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "单选",
     "tag": "n-radio-group",
-    "tagType": "radio",
+    "tagType": "Radio",
     "__layout__": {
       "span": 24
     },
@@ -92,12 +92,12 @@
       }
     }
   },
-  "checkbox": {
+  "Checkbox": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "复选框",
     "tag": "n-checkbox-group",
-    "tagType": "checkbox",
+    "tagType": "Checkbox",
     "__layout__": {
       "span": 24
     },
@@ -119,12 +119,12 @@
       }
     }
   },
-  "switch": {
+  "Switch": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "开关",
     "tag": "n-switch",
-    "tagType": "switch",
+    "tagType": "Switch",
     "__layout__": {
       "span": 24
     },
@@ -137,12 +137,12 @@
       "unchecked-icon": ""
     }
   },
-  "slider": {
+  "Slider": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "滑动选择",
     "tag": "n-slider",
-    "tagType": "slider",
+    "tagType": "Slider",
     "__layout__": {
       "span": 24
     },
@@ -151,36 +151,36 @@
       "thumb": ""
     }
   },
-  "date": {
+  "Date": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "日期选择",
     "tag": "n-date-picker",
-    "tagType": "date",
+    "tagType": "Date",
     "__layout__": {
       "span": 24
     },
     "__config__": {},
     "__slot__": {}
   },
-  "time": {
+  "Time": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "时间选择",
     "tag": "n-time-picker",
-    "tagType": "time",
+    "tagType": "Time",
     "__layout__": {
       "span": 24
     },
     "__config__": {},
     "__slot__": {}
   },
-  "rate": {
+  "Rate": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "评分",
     "tag": "n-rate",
-    "tagType": "rate",
+    "tagType": "Rate",
     "__layout__": {
       "span": 24
     },
@@ -189,12 +189,12 @@
       "default": ""
     }
   },
-  "color": {
+  "Color": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "颜色选择",
     "tag": "n-color-picker",
-    "tagType": "color",
+    "tagType": "Color",
     "__layout__": {
       "span": 24
     },

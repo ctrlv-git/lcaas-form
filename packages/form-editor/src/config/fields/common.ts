@@ -113,7 +113,7 @@ export const rules = [
     component: 'n-switch',
     props: {},
     emits: {
-      linkMark(conf: FormItem, val) {
+      linkMark(val, conf: FormItem) {
         conf.__layout__.showRequireMark = val;
       },
     },
