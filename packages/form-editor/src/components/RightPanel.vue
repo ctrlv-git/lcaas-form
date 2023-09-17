@@ -77,10 +77,6 @@ const currentTab = ref<keyof typeof tabMap>('widget');
 
 //
 const { form: formRef, widget: widgetRef } = toRefs(props);
-// watch([props.widget, props.form], ([widgetVal, formVal]) => {
-//   widgetRef.value = widgetVal as FormItem;
-//   formRef.value = formVal as FormConfig;
-// });
 
 // 标签宽度
 const pixelOptions = pixelEnum.map((key) => ({ label: key, value: key }));

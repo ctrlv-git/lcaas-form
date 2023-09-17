@@ -23,6 +23,28 @@ function buildSlot(conf, componenProps) {
   }
   return childrenSlot;
 }
+// 处理控件事件
+function parseProps(currentProps, conf: FormItemConf, { props, emit }) {
+  const { tagType, __config__ } = conf;
+  if (['Date', 'Time'].includes(tagType)) {
+    //
+    if (__config__.valueFormat) {
+      currentProps['value-format'] = props.value;
+      currentProps['onUpdate:formatted-value'] = (val) => {
+        currentProps['value-format'] = val;
+        emit('update:value', val);
+      };
+      return currentProps;
+    }
+  }
+  // 默认
+  currentProps.value = props.value;
+  currentProps['onUpdate:value'] = (val) => {
+    currentProps.value = val;
+    emit('update:value', val);
+  };
+  return currentProps;
+}
 
 export interface FormItemConf {
   __uuid__: string;
@@ -57,16 +79,8 @@ export default defineComponent({
 
       const componen = resolveComponent(tag);
 
-      const componenProps = mergeProps(
-        {
-          value: props.value,
-          'onUpdate:value': (val) => {
-            emit('update:value', val);
-          },
-        },
-        __config__,
-        attrs,
-      );
+      let componenProps = mergeProps(__config__, attrs);
+      componenProps = parseProps(componenProps, props.conf, { props, emit });
 
       const componenSlot = buildSlot(props.conf, componenProps) as any;
 

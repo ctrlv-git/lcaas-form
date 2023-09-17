@@ -1,3 +1,4 @@
+import eventBus from '@/hooks/useEventBus';
 export const Select = [
   {
     label: '占位提示',
@@ -61,41 +62,64 @@ export const Cascader = [
     },
   },
   {
-    label: '最小行数',
-    path: '__config__.autosize.minRows',
-    component: 'n-input-number',
+    label: '勾选策略',
+    path: '__config__.checkStrategy',
+    component: 'n-radio-group',
     props: {
-      defaultValue: 3,
-      buttonPlacement: 'both',
-      min: 1,
-      max: 99,
-      step: 0,
+      defaultValue: 'all',
+    },
+    slot: {
+      type: 'button',
+      space: {},
+      options: [
+        {
+          value: 'all',
+          label: '全部',
+        },
+        {
+          value: 'parent',
+          label: '父节点',
+        },
+        {
+          value: 'child',
+          label: '子节点',
+        },
+      ],
     },
   },
   {
-    label: '最大行数',
-    path: '__config__.autosize.maxRows',
-    component: 'n-input-number',
+    label: '显示路径',
+    path: '__config__.showPath',
+    component: 'n-switch',
     props: {
-      defaultValue: 3,
-      buttonPlacement: 'both',
-      min: 1,
-      max: 99,
-      step: 0,
+      defaultValue: true,
     },
   },
+  //   {
+  //     label: '展开方式',
+  //     path: '__config__.expandTrigger',
+  //     component: 'n-radio-group',
+  //     props: {
+  //       defaultValue: 'all',
+  //     },
+  //     slot: {
+  //       type: 'click',
+  //       space: {},
+  //       options: [
+  //         {
+  //           value: 'click',
+  //           label: 'click',
+  //         },
+  //         {
+  //           value: 'hover',
+  //           label: 'hover',
+  //         },
+  //       ],
+  //     },
+  //   },
   {
-    label: '最大长度',
-    path: '__config__.maxlength',
-    component: 'input-unit',
-    props: {
-      suffix: '字符',
-      clearable: true,
-    },
-  },
-  {
-    label: '显示字数',
-    path: '__config__.showCount',
+    label: '是否过滤',
+    path: '__config__.filterable',
     component: 'n-switch',
     props: {},
   },
@@ -105,146 +129,71 @@ export const Cascader = [
     component: 'n-switch',
     props: {},
   },
+  // 多选
   {
-    label: '是否只读',
-    path: '__config__.readonly',
+    label: '是否多选',
+    path: '__config__.multiple',
     component: 'n-switch',
     props: {},
+  },
+  {
+    label: '标签数自适应',
+    hidden: (widget) => {
+      const {
+        __config__: { multiple },
+      } = widget;
+      return !!multiple;
+    },
+    path: '__config__.maxTagCount',
+    component: 'n-checkbox',
+    props: {
+      checkedValue: 'responsive',
+      uncheckedValue: null,
+    },
+  },
+  {
+    label: '关联选项',
+    path: '__config__.cascade',
+    hidden: (widget) => {
+      const {
+        __config__: { multiple },
+      } = widget;
+      return !!multiple;
+    },
+    component: 'n-switch',
+    props: {
+      defaultValue: true,
+    },
   },
 ];
 export const Radio = [
   {
-    label: '占位提示',
-    path: '__config__.placeholder',
-    component: 'n-input',
+    label: '选项样式',
+    path: '__slot__.default.type',
+    component: 'n-radio-group',
     props: {
-      clearable: true,
+      defaultValue: 'radio',
     },
-  },
-  {
-    label: '前缀',
-    path: '__slot__.preLabel',
-    component: 'n-input',
-    props: {
-      clearable: true,
+    slot: {
+      type: 'button',
+      space: {},
+      options: [
+        {
+          value: 'radio',
+          label: '默认',
+        },
+        {
+          value: 'button',
+          label: '按钮',
+        },
+      ],
     },
-  },
-  {
-    label: '后缀',
-    path: '__slot__.sufLabel',
-    component: 'n-input',
-    props: {
-      clearable: true,
-    },
-  },
-  {
-    label: '前图标',
-    path: '__slot__.default.prefix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '关闭图标',
-    path: '__slot__.default.password-invisible-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '密码关闭时图标',
-    },
-  },
-  {
-    label: '打开图标',
-    path: '__slot__.default.password-visible-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '密码打开时图标',
-    },
-  },
-  {
-    label: '最大长度',
-    path: '__config__.maxlength',
-    component: 'input-unit',
-    props: {
-      suffix: '字符',
-      clearable: true,
-    },
-  },
-  {
-    label: '是否圆角',
-    path: '__config__.round',
-    component: 'n-switch',
-    props: {},
-  },
-  {
-    label: '能否清空',
-    path: '__config__.clearable',
-    component: 'n-switch',
-    props: {},
-  },
-  {
-    label: '是否只读',
-    path: '__config__.readonly',
-    component: 'n-switch',
-    props: {},
   },
 ];
 export const Checkbox = [
   {
-    label: '占位提示',
-    path: '__config__.placeholder',
-    component: 'n-input',
-    props: {
-      clearable: true,
-    },
-  },
-  {
-    label: '前图标',
-    path: '__slot__.prefix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '后图标',
-    path: '__slot__.suffix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '增加按钮',
-    path: '__slot__.add-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '增加按钮的图标',
-    },
-  },
-  {
-    label: '减少按钮',
-    path: '__slot__.minus-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '减少按钮的图标',
-    },
-  },
-  {
-    label: '最大值',
+    label: '最大数量',
     path: '__config__.max',
-    component: 'n-input',
-    props: {
-      clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
-    },
-  },
-  {
-    label: '最小值',
-    path: '__config__.min',
-    component: 'n-input',
-    props: {
-      clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
-    },
-  },
-  {
-    label: '步长',
-    path: '__config__.step',
     component: 'n-input-number',
     props: {
       clearable: true,
@@ -254,252 +203,68 @@ export const Checkbox = [
     },
   },
   {
-    label: '精度',
-    path: '__config__.precision',
+    label: '最小数量',
+    path: '__config__.min',
     component: 'n-input-number',
     props: {
       clearable: true,
       buttonPlacement: 'both',
-      min: 0,
-      max: 9,
+      min: 1,
       setp: 1,
     },
-  },
-
-  {
-    label: '显示按钮',
-    path: '__config__.showButton',
-    component: 'n-switch',
-    props: {
-      defaultValue: true,
-    },
-  },
-  {
-    label: '按钮位置',
-    path: '__config__.buttonPlacement',
-    component: 'n-radio-group',
-    props: {
-      defaultValue: 'right',
-    },
-    slot: {
-      type: 'button',
-      space: {},
-      options: [
-        {
-          value: 'both',
-          label: '两边',
-        },
-        {
-          value: 'right',
-          label: '右侧',
-        },
-      ],
-    },
-  },
-  {
-    label: '显示边框',
-    path: '__config__.bordered',
-    component: 'n-switch',
-    props: {
-      defaultValue: true,
-    },
-  },
-  {
-    label: '能否清空',
-    path: '__config__.clearable',
-    component: 'n-switch',
-    props: {},
-  },
-  {
-    label: '是否只读',
-    path: '__config__.readonly',
-    component: 'n-switch',
-    props: {},
   },
 ];
 export const Switch = [
   {
-    label: '占位提示',
-    path: '__config__.placeholder',
+    label: '开启描述',
+    path: '__slot__.checked',
     component: 'n-input',
     props: {
       clearable: true,
     },
   },
   {
-    label: '前图标',
-    path: '__slot__.prefix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '后图标',
-    path: '__slot__.suffix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '增加按钮',
-    path: '__slot__.add-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '增加按钮的图标',
-    },
-  },
-  {
-    label: '减少按钮',
-    path: '__slot__.minus-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '减少按钮的图标',
-    },
-  },
-  {
-    label: '最大值',
-    path: '__config__.max',
+    label: '关闭描述',
+    path: '__slot__.unchecked',
     component: 'n-input',
     props: {
       clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
     },
   },
   {
-    label: '最小值',
-    path: '__config__.min',
-    component: 'n-input',
-    props: {
-      clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
-    },
-  },
-  {
-    label: '步长',
-    path: '__config__.step',
-    component: 'n-input-number',
-    props: {
-      clearable: true,
-      buttonPlacement: 'both',
-      min: 1,
-      setp: 1,
-    },
-  },
-  {
-    label: '精度',
-    path: '__config__.precision',
-    component: 'n-input-number',
-    props: {
-      clearable: true,
-      buttonPlacement: 'both',
-      min: 0,
-      max: 9,
-      setp: 1,
-    },
-  },
-
-  {
-    label: '显示按钮',
-    path: '__config__.showButton',
+    label: '是否圆形',
+    path: '__config__.round',
     component: 'n-switch',
     props: {
       defaultValue: true,
     },
   },
   {
-    label: '按钮位置',
-    path: '__config__.buttonPlacement',
-    component: 'n-radio-group',
-    props: {
-      defaultValue: 'right',
-    },
-    slot: {
-      type: 'button',
-      space: {},
-      options: [
-        {
-          value: 'both',
-          label: '两边',
-        },
-        {
-          value: 'right',
-          label: '右侧',
-        },
-      ],
-    },
-  },
-  {
-    label: '显示边框',
-    path: '__config__.bordered',
+    label: '按钮动画',
+    path: '__config__.rubberBand',
     component: 'n-switch',
     props: {
       defaultValue: true,
     },
-  },
-  {
-    label: '能否清空',
-    path: '__config__.clearable',
-    component: 'n-switch',
-    props: {},
-  },
-  {
-    label: '是否只读',
-    path: '__config__.readonly',
-    component: 'n-switch',
-    props: {},
   },
 ];
 export const Slider = [
   {
-    label: '占位提示',
-    path: '__config__.placeholder',
-    component: 'n-input',
-    props: {
-      clearable: true,
-    },
-  },
-  {
-    label: '前图标',
-    path: '__slot__.prefix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '后图标',
-    path: '__slot__.suffix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '增加按钮',
-    path: '__slot__.add-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '增加按钮的图标',
-    },
-  },
-  {
-    label: '减少按钮',
-    path: '__slot__.minus-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '减少按钮的图标',
-    },
-  },
-  {
     label: '最大值',
     path: '__config__.max',
-    component: 'n-input',
+    component: 'n-input-number',
     props: {
-      clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
+      defaultValue: 100,
+      buttonPlacement: 'both',
     },
   },
   {
     label: '最小值',
     path: '__config__.min',
-    component: 'n-input',
+    component: 'n-input-number',
     props: {
-      clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
+      defaultValue: 1,
+      buttonPlacement: 'both',
     },
   },
   {
@@ -507,74 +272,34 @@ export const Slider = [
     path: '__config__.step',
     component: 'n-input-number',
     props: {
-      clearable: true,
+      defaultValue: 1,
       buttonPlacement: 'both',
-      min: 1,
-      setp: 1,
     },
   },
+  //   {
+  //     label: '是否倒转',
+  //     path: '__config__.reverse',
+  //     component: 'n-switch',
+  //     props: {
+  //       defaultValue: true,
+  //     },
+  //   },
   {
-    label: '精度',
-    path: '__config__.precision',
-    component: 'n-input-number',
-    props: {
-      clearable: true,
-      buttonPlacement: 'both',
-      min: 0,
-      max: 9,
-      setp: 1,
-    },
-  },
-
-  {
-    label: '显示按钮',
-    path: '__config__.showButton',
+    label: '范围选择',
+    path: '__config__.range',
     component: 'n-switch',
     props: {
-      defaultValue: true,
+      defaultValue: false,
     },
-  },
-  {
-    label: '按钮位置',
-    path: '__config__.buttonPlacement',
-    component: 'n-radio-group',
-    props: {
-      defaultValue: 'right',
+    emits: {
+      changeDefaultValue(state, conf: FormItem) {
+        const { __config__ } = conf;
+        const { max, min } = __config__;
+        const defaultValue = state ? [min || 0, max || 100] : min;
+        __config__.defaultValue = defaultValue;
+        eventBus.$emit('slider:range', conf);
+      },
     },
-    slot: {
-      type: 'button',
-      space: {},
-      options: [
-        {
-          value: 'both',
-          label: '两边',
-        },
-        {
-          value: 'right',
-          label: '右侧',
-        },
-      ],
-    },
-  },
-  {
-    label: '显示边框',
-    path: '__config__.bordered',
-    component: 'n-switch',
-    props: {
-      defaultValue: true,
-    },
-  },
-  {
-    label: '能否清空',
-    path: '__config__.clearable',
-    component: 'n-switch',
-    props: {},
-  },
-  {
-    label: '是否只读',
-    path: '__config__.readonly',
-    component: 'n-switch',
-    props: {},
   },
 ];
 export const Date = [
@@ -587,113 +312,50 @@ export const Date = [
     },
   },
   {
-    label: '前图标',
-    path: '__slot__.prefix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '后图标',
-    path: '__slot__.suffix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '增加按钮',
-    path: '__slot__.add-icon',
-    component: 'SelectIcon',
+    label: '日期类型',
+    path: '__config__.type',
+    component: 'n-select',
     props: {
-      placeholder: '增加按钮的图标',
-    },
-  },
-  {
-    label: '减少按钮',
-    path: '__slot__.minus-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '减少按钮的图标',
-    },
-  },
-  {
-    label: '最大值',
-    path: '__config__.max',
-    component: 'n-input',
-    props: {
-      clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
-    },
-  },
-  {
-    label: '最小值',
-    path: '__config__.min',
-    component: 'n-input',
-    props: {
-      clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
-    },
-  },
-  {
-    label: '步长',
-    path: '__config__.step',
-    component: 'n-input-number',
-    props: {
-      clearable: true,
-      buttonPlacement: 'both',
-      min: 1,
-      setp: 1,
-    },
-  },
-  {
-    label: '精度',
-    path: '__config__.precision',
-    component: 'n-input-number',
-    props: {
-      clearable: true,
-      buttonPlacement: 'both',
-      min: 0,
-      max: 9,
-      setp: 1,
-    },
-  },
-
-  {
-    label: '显示按钮',
-    path: '__config__.showButton',
-    component: 'n-switch',
-    props: {
-      defaultValue: true,
-    },
-  },
-  {
-    label: '按钮位置',
-    path: '__config__.buttonPlacement',
-    component: 'n-radio-group',
-    props: {
-      defaultValue: 'right',
-    },
-    slot: {
-      type: 'button',
-      space: {},
+      defaultValue: 'date',
       options: [
-        {
-          value: 'both',
-          label: '两边',
-        },
-        {
-          value: 'right',
-          label: '右侧',
-        },
+        { label: '日期时间(datetime)', value: 'datetime' },
+        { label: '日(date)', value: 'date' },
+        { label: '月(month)', value: 'month' },
+        { label: '年(year)', value: 'year' },
+        { label: '季度(quarter)', value: 'quarter' },
+        // { label: 'daterange', value: 'daterange' },
+        // { label: 'datetimerange', value: 'datetimerange' },
+        // { label: 'monthrange', value: 'monthrange' },
       ],
     },
   },
   {
-    label: '显示边框',
-    path: '__config__.bordered',
-    component: 'n-switch',
-    props: {
-      defaultValue: true,
-    },
+    label: '时间格式',
+    path: '__config__.valueFormat',
+    component: 'n-input',
+    props: {},
   },
+  //   {
+  //     label: '禁用时间',
+  //     path: '__config__.clearable',
+  //     props: {
+  //       defaultValue: 'right',
+  //     },
+  //     slot: {
+  //       type: 'button',
+  //       space: {},
+  //       options: [
+  //         {
+  //           value: '过去',
+  //           label: '过去',
+  //         },
+  //         {
+  //           value: '未来',
+  //           label: '未来',
+  //         },
+  //       ],
+  //     },
+  //   },
   {
     label: '能否清空',
     path: '__config__.clearable',
@@ -701,8 +363,8 @@ export const Date = [
     props: {},
   },
   {
-    label: '是否只读',
-    path: '__config__.readonly',
+    label: '禁用输入框',
+    path: '__config__.inputReadonly',
     component: 'n-switch',
     props: {},
   },
@@ -717,112 +379,10 @@ export const Time = [
     },
   },
   {
-    label: '前图标',
-    path: '__slot__.prefix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '后图标',
-    path: '__slot__.suffix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '增加按钮',
-    path: '__slot__.add-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '增加按钮的图标',
-    },
-  },
-  {
-    label: '减少按钮',
-    path: '__slot__.minus-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '减少按钮的图标',
-    },
-  },
-  {
-    label: '最大值',
-    path: '__config__.max',
+    label: '时间格式',
+    path: '__config__.valueFormat',
     component: 'n-input',
-    props: {
-      clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
-    },
-  },
-  {
-    label: '最小值',
-    path: '__config__.min',
-    component: 'n-input',
-    props: {
-      clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
-    },
-  },
-  {
-    label: '步长',
-    path: '__config__.step',
-    component: 'n-input-number',
-    props: {
-      clearable: true,
-      buttonPlacement: 'both',
-      min: 1,
-      setp: 1,
-    },
-  },
-  {
-    label: '精度',
-    path: '__config__.precision',
-    component: 'n-input-number',
-    props: {
-      clearable: true,
-      buttonPlacement: 'both',
-      min: 0,
-      max: 9,
-      setp: 1,
-    },
-  },
-
-  {
-    label: '显示按钮',
-    path: '__config__.showButton',
-    component: 'n-switch',
-    props: {
-      defaultValue: true,
-    },
-  },
-  {
-    label: '按钮位置',
-    path: '__config__.buttonPlacement',
-    component: 'n-radio-group',
-    props: {
-      defaultValue: 'right',
-    },
-    slot: {
-      type: 'button',
-      space: {},
-      options: [
-        {
-          value: 'both',
-          label: '两边',
-        },
-        {
-          value: 'right',
-          label: '右侧',
-        },
-      ],
-    },
-  },
-  {
-    label: '显示边框',
-    path: '__config__.bordered',
-    component: 'n-switch',
-    props: {
-      defaultValue: true,
-    },
+    props: {},
   },
   {
     label: '能否清空',
@@ -831,127 +391,38 @@ export const Time = [
     props: {},
   },
   {
-    label: '是否只读',
-    path: '__config__.readonly',
+    label: '禁用输入框',
+    path: '__config__.inputReadonly',
     component: 'n-switch',
     props: {},
   },
 ];
 export const Rate = [
   {
-    label: '占位提示',
-    path: '__config__.placeholder',
-    component: 'n-input',
-    props: {
-      clearable: true,
-    },
+    label: '允许半选',
+    path: '__config__.allowHalf',
+    component: 'n-switch',
+    props: {},
   },
   {
     label: '前图标',
-    path: '__slot__.prefix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '后图标',
-    path: '__slot__.suffix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '增加按钮',
-    path: '__slot__.add-icon',
-    component: 'SelectIcon',
+    path: '__config__.color',
+    component: 'n-color-picker',
     props: {
-      placeholder: '增加按钮的图标',
+      defaultValue: '#FFCC33',
     },
   },
   {
-    label: '减少按钮',
-    path: '__slot__.minus-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '减少按钮的图标',
-    },
-  },
-  {
-    label: '最大值',
-    path: '__config__.max',
-    component: 'n-input',
-    props: {
-      clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
-    },
-  },
-  {
-    label: '最小值',
-    path: '__config__.min',
-    component: 'n-input',
-    props: {
-      clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
-    },
-  },
-  {
-    label: '步长',
-    path: '__config__.step',
+    label: '图标个数',
+    path: '__config__.count',
     component: 'n-input-number',
     props: {
+      defaultValue: 5,
       clearable: true,
       buttonPlacement: 'both',
       min: 1,
+      precision: 0,
       setp: 1,
-    },
-  },
-  {
-    label: '精度',
-    path: '__config__.precision',
-    component: 'n-input-number',
-    props: {
-      clearable: true,
-      buttonPlacement: 'both',
-      min: 0,
-      max: 9,
-      setp: 1,
-    },
-  },
-
-  {
-    label: '显示按钮',
-    path: '__config__.showButton',
-    component: 'n-switch',
-    props: {
-      defaultValue: true,
-    },
-  },
-  {
-    label: '按钮位置',
-    path: '__config__.buttonPlacement',
-    component: 'n-radio-group',
-    props: {
-      defaultValue: 'right',
-    },
-    slot: {
-      type: 'button',
-      space: {},
-      options: [
-        {
-          value: 'both',
-          label: '两边',
-        },
-        {
-          value: 'right',
-          label: '右侧',
-        },
-      ],
-    },
-  },
-  {
-    label: '显示边框',
-    path: '__config__.bordered',
-    component: 'n-switch',
-    props: {
-      defaultValue: true,
     },
   },
   {
@@ -969,121 +440,37 @@ export const Rate = [
 ];
 export const Color = [
   {
-    label: '占位提示',
-    path: '__config__.placeholder',
-    component: 'n-input',
-    props: {
-      clearable: true,
-    },
-  },
-  {
-    label: '前图标',
-    path: '__slot__.prefix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '后图标',
-    path: '__slot__.suffix',
-    component: 'SelectIcon',
-    props: {},
-  },
-  {
-    label: '增加按钮',
-    path: '__slot__.add-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '增加按钮的图标',
-    },
-  },
-  {
-    label: '减少按钮',
-    path: '__slot__.minus-icon',
-    component: 'SelectIcon',
-    props: {
-      placeholder: '减少按钮的图标',
-    },
-  },
-  {
-    label: '最大值',
-    path: '__config__.max',
-    component: 'n-input',
-    props: {
-      clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
-    },
-  },
-  {
-    label: '最小值',
-    path: '__config__.min',
-    component: 'n-input',
-    props: {
-      clearable: true,
-      allowInput: (val) => !val || /^[-]?\d+(\.\d+)?$/.test(val),
-    },
-  },
-  {
-    label: '步长',
-    path: '__config__.step',
-    component: 'n-input-number',
-    props: {
-      clearable: true,
-      buttonPlacement: 'both',
-      min: 1,
-      setp: 1,
-    },
-  },
-  {
-    label: '精度',
-    path: '__config__.precision',
-    component: 'n-input-number',
-    props: {
-      clearable: true,
-      buttonPlacement: 'both',
-      min: 0,
-      max: 9,
-      setp: 1,
-    },
-  },
-
-  {
-    label: '显示按钮',
-    path: '__config__.showButton',
+    label: '展示透明度',
+    path: '__config__.showAlpha',
     component: 'n-switch',
     props: {
       defaultValue: true,
     },
   },
   {
-    label: '按钮位置',
-    path: '__config__.buttonPlacement',
-    component: 'n-radio-group',
+    label: '展示预览块',
+    path: '__config__.showPreview',
+    component: 'n-switch',
+    props: {},
+  },
+  {
+    label: '支持颜色格式',
+    path: '__config__.modes',
+    component: 'n-checkbox-group',
     props: {
-      defaultValue: 'right',
+      defaultValue: ['rgb', 'hex', 'hsl'],
     },
     slot: {
-      type: 'button',
       space: {},
       options: [
-        {
-          value: 'both',
-          label: '两边',
-        },
-        {
-          value: 'right',
-          label: '右侧',
-        },
+        { label: 'rgb', value: 'rgb' },
+        { label: 'hex', value: 'hex' },
+        { label: 'hsl', value: 'hsl' },
+        { label: 'hsv', value: 'hsv' },
       ],
     },
   },
-  {
-    label: '显示边框',
-    path: '__config__.bordered',
-    component: 'n-switch',
-    props: {
-      defaultValue: true,
-    },
-  },
+
   {
     label: '能否清空',
     path: '__config__.clearable',

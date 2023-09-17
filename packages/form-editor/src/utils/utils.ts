@@ -82,3 +82,20 @@ export function chunkArray<T = any>(array: T[], chunkSize = 1) {
   }
   return results;
 }
+/**
+ * Descriptions tree删除节点
+ * @param {any} tree
+ * @param {any} node
+ * @param {string} key='value
+ * @returns {viod}
+ */
+export function treeRemoveNode(tree, node, key = 'value') {
+  for (let i = 0; i < tree.length; i++) {
+    if (tree[i][key] === node[key]) {
+      tree.splice(i, 1);
+      break;
+    } else if (tree[i].children) {
+      treeRemoveNode(tree[i].children, node);
+    }
+  }
+}

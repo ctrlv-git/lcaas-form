@@ -20,7 +20,14 @@ const genSlot = {
     return h(NSpace, spaceProps, () => options.map((props) => h(tag, props)));
   },
 };
-
+// 修复控件配置值对渲染器的bug
+function parseWidgetValue(val) {
+  if (['true', 'false'].includes(val)) {
+    return JSON.parse(val);
+  }
+  // 待验证复选框设置可选数量时需将 null 转化为 undefined
+  return val ?? undefined;
+}
 export default defineComponent({
   name: 'WidgetItem',
   props: {
@@ -53,6 +60,8 @@ export default defineComponent({
     };
 
     const setFieldValue = (path, val) => {
+      const setValue = parseWidgetValue(val);
+
       const { model } = toRefs(props);
 
       if (path.includes('.')) {
@@ -63,10 +72,10 @@ export default defineComponent({
           return previous[current];
         }, model.value);
 
-        data[attr] = val;
+        data[attr] = setValue;
       } else {
         if (model && model.value) {
-          model.value[path] = val;
+          model.value[path] = setValue;
         }
       }
     };

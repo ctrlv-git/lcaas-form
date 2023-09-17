@@ -21,7 +21,7 @@
   "extends": "../../tsconfig.node.json",
   "include": [
     "./.build/**/*.ts",
-    "./types/**/*",
+    "types/**/*.d.ts",
     "package.json",
     "src/**/*.d.ts",
     "src/**/*.json",

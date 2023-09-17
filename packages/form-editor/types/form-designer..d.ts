@@ -1,7 +1,7 @@
 import type { FormProps, GridProps } from 'naive-ui';
 export {};
 declare global {
-  declare type FormItem = {
+  type FormItem = {
     __uuid__: string;
     __vModel__: string;
     label: string;
@@ -12,14 +12,14 @@ declare global {
     __slot__: Record<string, any>;
     __rules__: Record<string, any>[];
   };
-  declare type FormConfig = {
+  type FormConfig = {
     name: string;
     fromGrid: GridProps;
     fromGlobal: FormProps;
     items: FormItem[];
     id?: string;
   };
-  declare type LabelValue = {
+  type LabelValue = {
     label: string;
     value: any;
   };

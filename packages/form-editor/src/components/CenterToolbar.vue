@@ -80,10 +80,11 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(['onUndo', 'onRedo', 'onPreview', 'onEmpty', 'onSave']);
 
 const bindClick = (type: MethodsType) => {
+  const { designer } = props;
   const str = type.replace(/^\S/, (s) => s.toUpperCase()) as Capitalize<MethodsType>;
   const key: PadStartCamel<'on', MethodsType> = `on${str}`;
-  formConfig.value = props?.designer.getConf();
-  props?.designer[type]((...arg) => {
+  formConfig.value = designer.getConf();
+  designer[type]((...arg) => {
     if (type === 'preview') {
       showModal.value = arg[0];
     }

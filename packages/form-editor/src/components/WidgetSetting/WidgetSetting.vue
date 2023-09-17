@@ -24,29 +24,46 @@
           :model="props.widget"
           :fields="extendConfig"
         ></WidgetItem>
-        <n-divider dashed><span class="divider-label">选项</span></n-divider>
-        <lc-draggable v-model="options" class="components-draggable" :config="{ sort: true, handle: '.tag-draggable' }">
-          <div v-for="(option, index) in options" :key="option['__idx__']" class="opt-draggable">
-            <n-input-group>
-              <n-tag checkable size="large" class="tag-draggable">
-                <n-icon size="18" :component="IosList"></n-icon>
-              </n-tag>
-              <n-input v-model:value="option.label" placeholder="选项名" />
-              <n-input v-model:value="option.value" placeholder="选项值" />
-              <n-tag checkable size="large" class="tag-draggable" @click="bindRemoveOption(index)">
-                <n-icon size="18" :component="MdRemoveCircleOutline" class="btn-error"></n-icon>
-              </n-tag>
-            </n-input-group>
-          </div>
-        </lc-draggable>
-        <div style="padding: 0 10px">
-          <n-button text type="info" @click="bindAddOption">
-            <template #icon>
-              <n-icon :component="MdAddCircleOutline"></n-icon>
-            </template>
-            <span>添加选项</span>
-          </n-button>
-        </div>
+        <template v-if="hasOptions">
+          <n-divider dashed><span class="divider-label">选项</span></n-divider>
+          <template v-if="widget?.tagType !== 'Cascader'">
+            <div v-for="(option, index) in optionsData" :key="index" class="opt-draggable">
+              <n-input-group>
+                <n-input v-model:value="option.label" placeholder="选项名" />
+                <n-input v-model:value="option.value" placeholder="选项值" />
+                <n-tag checkable size="large" class="tag-draggable" @click="bindRemoveOption(index)">
+                  <n-icon size="18" :component="MdRemoveCircleOutline" class="btn-error"></n-icon>
+                </n-tag>
+              </n-input-group>
+            </div>
+
+            <div style="padding: 0 10px">
+              <n-button text type="info" @click="bindAddOption">
+                <template #icon>
+                  <n-icon :component="MdAddCircleOutline"></n-icon>
+                </template>
+                <span>添加选项</span>
+              </n-button>
+            </div>
+          </template>
+          <template v-else>
+            <n-tree
+              :data="optionsData"
+              block-line
+              key-field="value"
+              expand-on-click
+              :render-suffix="renderTreeSuffix"
+            />
+            <div style="padding: 0 10px">
+              <n-button text type="info" @click="() => openTreeDialog()">
+                <template #icon>
+                  <n-icon :component="MdAddCircleOutline"></n-icon>
+                </template>
+                <span>添加选项</span>
+              </n-button>
+            </div>
+          </template>
+        </template>
       </n-collapse-item>
       <n-collapse-item title="校验规则" name="rulesConfig">
         <WidgetItem
@@ -85,18 +102,48 @@
       </n-collapse-item>
     </n-collapse>
   </n-form>
+  <!-- 选项弹窗 -->
+  <n-modal
+    v-model:show="showTreeModal"
+    :mask-closable="false"
+    :on-after-leave="onTreeClose"
+    size="small"
+    preset="dialog"
+    title="添加选项"
+    style="width: 580px"
+    positive-text="确认"
+    @positive-click="bindAddTreeOption"
+  >
+    <n-form-item label="上级选项" label-placement="left" label-width="6em">
+      <n-tree-select
+        block-line
+        :default-value="selectTree?.value"
+        :options="optionsData"
+        :on-update:value="onTreeSelect"
+        default-expand-all
+        key-field="value"
+      />
+    </n-form-item>
+    <n-form-item label="选项名" label-placement="left" label-width="6em" path="label" :rule="requireRule">
+      <n-input v-model:value="treeAddData.label" />
+    </n-form-item>
+    <n-form-item label="选项值" label-placement="left" label-width="6em" path="value" :rule="requireRule">
+      <n-input v-model:value="treeAddData.value" />
+    </n-form-item>
+  </n-modal>
 </template>
 
 <script setup lang="ts" name="WidgetSetting">
-import { LcDraggable } from '@/components/lc-draggable';
-import { MdAddCircleOutline, MdCloseCircleOutline, IosList, MdRemoveCircleOutline } from '@vicons/ionicons4';
 import { fieldsConfig, patternEnum } from '@/config';
-import WidgetItem from './WidgetItem';
+import { treeRemoveNode } from '@/utils';
+import { MdAddCircleOutline, MdCloseCircleOutline, MdRemoveCircleOutline, MdAdd, MdRemove } from '@vicons/ionicons4';
 import { cloneDeep } from 'lodash-es';
-
+import { NButton, NIcon, NSpace } from 'naive-ui';
+import WidgetItem from './WidgetItem';
 export interface Props {
   widget: FormItem;
 }
+
 const props = withDefaults(defineProps<Props>(), {
   widget: undefined,
 });
@@ -111,37 +158,110 @@ const extendConfig = computed(() => {
   });
 });
 /* *选项配置* */
-const options = computed({
+const hasOptions = computed(() => {
+  const { tagType } = props.widget;
+  return ['Select', 'Cascader', 'Radio', 'Checkbox'].includes(tagType);
+});
+const optionsData = computed({
   get() {
-    const {
-      __config__: { options = [] },
-    } = props.widget;
-    options.forEach((o, idx) => {
-      o['__idx__'] = Symbol(idx);
-    });
-    return options;
+    return getOptions();
   },
   set(val) {
-    const { __config__ } = props.widget;
-    __config__.options = val;
+    const { tagType, __slot__, __config__ } = props.widget;
+    ['Checkbox', 'Radio'].includes(tagType) ? (__slot__.default.options = val) : (__config__.options = val);
   },
 });
 const bindAddOption = () => {
-  const {
-    __config__: { options = [] },
-  } = props.widget;
-  options.push({
-    __idx__: Symbol(options.length + 1),
+  optionsData.value.push({
     label: '',
     value: '',
   });
 };
 const bindRemoveOption = (index) => {
+  const options = getOptions();
+  options.splice(index, 1);
+};
+// 树形数据
+const showTreeModal = ref(false);
+const selectTree = ref<any>({});
+const treeAddData = ref<LabelValue>({ label: '', value: '' });
+
+const onTreeSelect = (_val, meta) => {
+  selectTree.value = meta;
+};
+const onTreeClose = () => {
+  selectTree.value = {};
+  treeAddData.value = { label: '', value: '' };
+};
+const requireRule = {
+  trigger: ['input', 'blur'],
+  message: '内容不能为空',
+  validator({ field, message }) {
+    treeAddData.value[field];
+    if (!treeAddData.value[field]) {
+      return new Error(message);
+    }
+  },
+};
+const renderTreeSuffix = ({ option }) => {
+  return h(NSpace, {}, () => [
+    h(
+      NButton,
+      {
+        title: '添加',
+        text: true,
+        onClick(event) {
+          event.stopPropagation();
+          openTreeDialog(option);
+        },
+      },
+      () => h(NIcon, { component: MdAdd }),
+    ),
+    h(
+      NButton,
+      {
+        title: '删除',
+        text: true,
+        onClick(event) {
+          event.stopPropagation();
+          treeRemoveNode(unref(optionsData), option);
+        },
+      },
+      () => h(NIcon, { component: MdRemove }),
+    ),
+  ]);
+};
+const openTreeDialog = (option?) => {
+  showTreeModal.value = true;
+  selectTree.value = option;
+};
+const bindAddTreeOption = () => {
+  const { label, value } = unref(treeAddData);
+
+  if (!label || !value) {
+    window.$message.error('选项配置不能为空');
+    return false;
+  }
+
+  if (unref(selectTree)) {
+    unref(selectTree).children
+      ? unref(selectTree).children.push({ label, value })
+      : (unref(selectTree).children = [{ label, value }]);
+    return true;
+  }
+
   const {
     __config__: { options = [] },
   } = props.widget;
-  options.splice(index, 1);
+  options.push({
+    children: undefined,
+    label,
+    value,
+  });
+
+  return true;
 };
+
 /* *规则配置* */
 const bindAddRule = () => {
   const { __rules__ } = props.widget;
@@ -154,6 +274,11 @@ const bindRemoveRule = (index) => {
   const { __rules__ } = props.widget;
   __rules__.splice(index, 1);
 };
+
+function getOptions() {
+  const { tagType, __slot__, __config__ } = props.widget;
+  return ['Checkbox', 'Radio'].includes(tagType) ? __slot__.default.options : __config__.options;
+}
 </script>
 
 <style lang="scss" scoped>

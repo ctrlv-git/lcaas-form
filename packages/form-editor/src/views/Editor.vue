@@ -62,6 +62,7 @@ import { refCenterDraggable, refLeftDraggable } from '@/config';
 import { useDesigner } from '@/hooks/useDesigner';
 import { LcFormItem, parseRules } from '@lcaas/form-render';
 import { MdCopy, MdTrash } from '@vicons/ionicons4';
+import eventBus from '@/hooks/useEventBus';
 
 const draggableConfig = {
   group: { name: refCenterDraggable, pull: true, put: [refLeftDraggable, refCenterDraggable] },
@@ -77,6 +78,10 @@ const bindDraggableUpdate = (items, element) => {
   designer.setActiveWidget(element);
   designer.storage();
 };
+// slider 类型切换时
+eventBus.$on('slider:range', ({ __vModel__, __config__ }) => {
+  formData.value[__vModel__] = __config__.defaultValue;
+});
 </script>
 
 <style lang="scss" scoped>
