@@ -2,301 +2,417 @@ import eventBus from '@/hooks/useEventBus';
 export const Select = [
   {
     label: '占位提示',
-    path: '__config__.placeholder',
-    component: 'n-input',
-    props: {
+    tag: 'n-input',
+    tagType: 'Input',
+    __vModel__: '__config__.placeholder',
+    __layout__: {},
+    __config__: {
+      placeholder: '请输入占位提示',
       clearable: true,
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '是否过滤',
-    path: '__config__.filterable',
-    component: 'n-switch',
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.filterable',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '动态选项',
-    path: '__config__.tag',
-    component: 'n-switch',
-    props: {},
-    emits: {
-      linkFilterable(val, conf: FormItem) {
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.tag',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
+    __emits__: {
+      '__config__.filterable'(val, conf: FormItem) {
         conf.__config__.filterable = val;
       },
     },
   },
   {
     label: '能否清空',
-    path: '__config__.clearable',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.clearable',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '是否多选',
-    path: '__config__.multiple',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.multiple',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '标签数自适应',
+    tag: 'n-checkbox',
+    tagType: 'Checkbox',
     hidden: (widget) => {
       const {
         __config__: { multiple },
       } = widget;
       return !!multiple;
     },
-    path: '__config__.maxTagCount',
-    component: 'n-checkbox',
-    props: {
+    __vModel__: '__config__.maxTagCount',
+    __layout__: {},
+    __config__: {
       checkedValue: 'responsive',
       uncheckedValue: null,
     },
+    __slot__: {},
+    __rules__: [],
+  },
+  {
+    __uuid__: '__config__.options',
+    __vModel__: '__config__.options',
+    label: '添加选项',
+    tag: 'WidgetOptions',
+    tagType: 'Custom',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
+    __emits__: {},
   },
 ];
 export const Cascader = [
   {
     label: '占位提示',
-    path: '__config__.placeholder',
-    component: 'n-input',
-    props: {
+    tag: 'n-input',
+    tagType: 'Input',
+    __vModel__: '__config__.placeholder',
+    __layout__: {},
+    __config__: {
+      placeholder: '请输入占位提示',
       clearable: true,
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '勾选策略',
-    path: '__config__.checkStrategy',
-    component: 'n-radio-group',
-    props: {
-      defaultValue: 'all',
+    tag: 'n-radio-group',
+    tagType: 'Radio',
+    __vModel__: '__config__.checkStrategy',
+    __layout__: {},
+    __config__: {
+      'default-value': 'all',
     },
-    slot: {
-      type: 'button',
-      space: {},
-      options: [
-        {
-          value: 'all',
-          label: '全部',
-        },
-        {
-          value: 'parent',
-          label: '父节点',
-        },
-        {
-          value: 'child',
-          label: '子节点',
-        },
-      ],
+    __slot__: {
+      default: {
+        type: 'button',
+        space: {},
+        options: [
+          { value: 'all', label: '全部' },
+          { value: 'parent', label: '父节点' },
+          { value: 'child', label: '子节点' },
+        ],
+      },
     },
+    __rules__: [],
   },
   {
     label: '显示路径',
-    path: '__config__.showPath',
-    component: 'n-switch',
-    props: {
-      defaultValue: true,
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.showPath',
+    __layout__: {},
+    __config__: {
+      'default-value': true,
     },
+    __slot__: {},
+    __rules__: [],
   },
-  //   {
-  //     label: '展开方式',
-  //     path: '__config__.expandTrigger',
-  //     component: 'n-radio-group',
-  //     props: {
-  //       defaultValue: 'all',
-  //     },
-  //     slot: {
-  //       type: 'click',
-  //       space: {},
-  //       options: [
-  //         {
-  //           value: 'click',
-  //           label: 'click',
-  //         },
-  //         {
-  //           value: 'hover',
-  //           label: 'hover',
-  //         },
-  //       ],
-  //     },
-  //   },
   {
     label: '是否过滤',
-    path: '__config__.filterable',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.filterable',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '能否清空',
-    path: '__config__.clearable',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.clearable',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
   // 多选
   {
     label: '是否多选',
-    path: '__config__.multiple',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.multiple',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '标签数自适应',
+    tag: 'n-checkbox',
+    tagType: 'Checkbox',
     hidden: (widget) => {
       const {
         __config__: { multiple },
       } = widget;
       return !!multiple;
     },
-    path: '__config__.maxTagCount',
-    component: 'n-checkbox',
-    props: {
+    __vModel__: '__config__.maxTagCount',
+    __layout__: {},
+    __config__: {
       checkedValue: 'responsive',
       uncheckedValue: null,
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '关联选项',
-    path: '__config__.cascade',
+    tag: 'n-switch',
+    tagType: 'Switch',
     hidden: (widget) => {
       const {
         __config__: { multiple },
       } = widget;
       return !!multiple;
     },
-    component: 'n-switch',
-    props: {
-      defaultValue: true,
+    __vModel__: '__config__.cascade',
+    __layout__: {},
+    __config__: {
+      'default-value': true,
     },
+    __slot__: {},
+    __rules__: [],
+  },
+  {
+    __uuid__: '__config__.options',
+    __vModel__: '__config__.options',
+    label: '添加选项',
+    tag: 'WidgetTreeOptions',
+    tagType: 'Custom',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
+    __emits__: {},
   },
 ];
 export const Radio = [
   {
     label: '选项样式',
-    path: '__slot__.default.type',
-    component: 'n-radio-group',
-    props: {
-      defaultValue: 'radio',
+    tag: 'n-radio-group',
+    tagType: 'Radio',
+    __vModel__: '__slot__.default.type',
+    __layout__: {},
+    __config__: {
+      'default-value': 'radio',
     },
-    slot: {
-      type: 'button',
-      space: {},
-      options: [
-        {
-          value: 'radio',
-          label: '默认',
-        },
-        {
-          value: 'button',
-          label: '按钮',
-        },
-      ],
+    __slot__: {
+      default: {
+        type: 'button',
+        space: {},
+        options: [
+          { value: 'radio', label: '默认' },
+          { value: 'button', label: '按钮' },
+        ],
+      },
     },
+    __rules__: [],
+  },
+  {
+    __uuid__: '__slot__.default.options',
+    __vModel__: '__slot__.default.options',
+    label: '添加选项',
+    tag: 'WidgetOptions',
+    tagType: 'Custom',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
+    __emits__: {},
   },
 ];
 export const Checkbox = [
   {
     label: '最大数量',
-    path: '__config__.max',
-    component: 'n-input-number',
-    props: {
+    tag: 'n-input-number',
+    tagType: 'Number',
+    __vModel__: '__config__.max',
+    __layout__: {},
+    __config__: {
+      placeholder: '可被勾选的最大数量',
       clearable: true,
       buttonPlacement: 'both',
       min: 1,
       setp: 1,
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '最小数量',
-    path: '__config__.min',
-    component: 'n-input-number',
-    props: {
+    tag: 'n-input-number',
+    tagType: 'Number',
+    __vModel__: '__config__.min',
+    __layout__: {},
+    __config__: {
+      placeholder: '可被勾选的最小数量',
       clearable: true,
       buttonPlacement: 'both',
       min: 1,
       setp: 1,
     },
+    __slot__: {},
+    __rules__: [],
+  },
+  {
+    __uuid__: '__slot__.default.options',
+    __vModel__: '__slot__.default.options',
+    label: '添加选项',
+    tag: 'WidgetOptions',
+    tagType: 'Custom',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
+    __emits__: {},
   },
 ];
 export const Switch = [
   {
     label: '开启描述',
-    path: '__slot__.checked',
-    component: 'n-input',
-    props: {
+    tag: 'n-input',
+    tagType: 'Input',
+    __vModel__: '__slot__.checked',
+    __layout__: {},
+    __config__: {
+      placeholder: '请输入开启描述',
       clearable: true,
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '关闭描述',
-    path: '__slot__.unchecked',
-    component: 'n-input',
-    props: {
+    tag: 'n-input',
+    tagType: 'Input',
+    __vModel__: '__slot__.unchecked',
+    __layout__: {},
+    __config__: {
+      placeholder: '请输入关闭描述',
       clearable: true,
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '是否圆形',
-    path: '__config__.round',
-    component: 'n-switch',
-    props: {
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.round',
+    __layout__: {},
+    __config__: {
       defaultValue: true,
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '按钮动画',
-    path: '__config__.rubberBand',
-    component: 'n-switch',
-    props: {
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.rubberBand',
+    __layout__: {},
+    __config__: {
       defaultValue: true,
     },
+    __slot__: {},
+    __rules__: [],
   },
 ];
 export const Slider = [
   {
     label: '最大值',
-    path: '__config__.max',
-    component: 'n-input-number',
-    props: {
+    tag: 'n-input-number',
+    tagType: 'Number',
+    __vModel__: '__config__.max',
+    __layout__: {},
+    __config__: {
+      placeholder: '最大值',
       defaultValue: 100,
       buttonPlacement: 'both',
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '最小值',
-    path: '__config__.min',
-    component: 'n-input-number',
-    props: {
+    tag: 'n-input-number',
+    tagType: 'Number',
+    __vModel__: '__config__.min',
+    __layout__: {},
+    __config__: {
+      placeholder: '最小值',
       defaultValue: 1,
       buttonPlacement: 'both',
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '步长',
-    path: '__config__.step',
-    component: 'n-input-number',
-    props: {
+    tag: 'n-input-number',
+    tagType: 'Number',
+    __vModel__: '__config__.step',
+    __layout__: {},
+    __config__: {
+      placeholder: '步长',
       defaultValue: 1,
       buttonPlacement: 'both',
     },
+    __slot__: {},
+    __rules__: [],
   },
-  //   {
-  //     label: '是否倒转',
-  //     path: '__config__.reverse',
-  //     component: 'n-switch',
-  //     props: {
-  //       defaultValue: true,
-  //     },
-  //   },
   {
     label: '范围选择',
-    path: '__config__.range',
-    component: 'n-switch',
-    props: {
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.range',
+    __layout__: {},
+    __config__: {
       defaultValue: false,
     },
-    emits: {
+    __slot__: {},
+    __rules__: [],
+    __emits__: {
       changeDefaultValue(state, conf: FormItem) {
         const { __config__ } = conf;
         const { max, min } = __config__;
         const defaultValue = state ? [min || 0, max || 100] : min;
         __config__.defaultValue = defaultValue;
+        //
         eventBus.$emit('slider:range', conf);
       },
     },
@@ -305,17 +421,24 @@ export const Slider = [
 export const Date = [
   {
     label: '占位提示',
-    path: '__config__.placeholder',
-    component: 'n-input',
-    props: {
+    tag: 'n-input',
+    tagType: 'Input',
+    __vModel__: '__config__.placeholder',
+    __layout__: {},
+    __config__: {
+      placeholder: '请输入占位提示',
       clearable: true,
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '日期类型',
-    path: '__config__.type',
-    component: 'n-select',
-    props: {
+    tag: 'n-select',
+    tagType: 'Select',
+    __vModel__: '__config__.type',
+    __layout__: {},
+    __config__: {
       defaultValue: 'date',
       options: [
         { label: '日期时间(datetime)', value: 'datetime' },
@@ -328,95 +451,121 @@ export const Date = [
         // { label: 'monthrange', value: 'monthrange' },
       ],
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '时间格式',
-    path: '__config__.valueFormat',
-    component: 'n-input',
-    props: {},
+    tag: 'n-input',
+    tagType: 'Input',
+    __vModel__: '__config__.valueFormat',
+    __layout__: {},
+    __config__: {
+      placeholder: '例如: yyyy-MM-dd HH:mm:ss',
+      clearable: true,
+    },
+    __slot__: {},
+    __rules__: [],
   },
-  //   {
-  //     label: '禁用时间',
-  //     path: '__config__.clearable',
-  //     props: {
-  //       defaultValue: 'right',
-  //     },
-  //     slot: {
-  //       type: 'button',
-  //       space: {},
-  //       options: [
-  //         {
-  //           value: '过去',
-  //           label: '过去',
-  //         },
-  //         {
-  //           value: '未来',
-  //           label: '未来',
-  //         },
-  //       ],
-  //     },
-  //   },
   {
     label: '能否清空',
-    path: '__config__.clearable',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.clearable',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '禁用输入框',
-    path: '__config__.inputReadonly',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.inputReadonly',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
 ];
 export const Time = [
   {
     label: '占位提示',
-    path: '__config__.placeholder',
-    component: 'n-input',
-    props: {
+    tag: 'n-input',
+    tagType: 'Input',
+    __vModel__: '__config__.placeholder',
+    __layout__: {},
+    __config__: {
+      placeholder: '请输入占位提示',
       clearable: true,
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '时间格式',
-    path: '__config__.valueFormat',
-    component: 'n-input',
-    props: {},
+    tag: 'n-input',
+    tagType: 'Input',
+    __vModel__: '__config__.valueFormat',
+    __layout__: {},
+    __config__: {
+      placeholder: '例如: HH:mm:ss',
+      clearable: true,
+    },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '能否清空',
-    path: '__config__.clearable',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.clearable',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '禁用输入框',
-    path: '__config__.inputReadonly',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.inputReadonly',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
 ];
 export const Rate = [
   {
     label: '允许半选',
-    path: '__config__.allowHalf',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.allowHalf',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '前图标',
-    path: '__config__.color',
-    component: 'n-color-picker',
-    props: {
+    tag: 'n-color-picker',
+    tagType: 'Color',
+    __vModel__: '__config__.color',
+    __layout__: {},
+    __config__: {
       defaultValue: '#FFCC33',
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '图标个数',
-    path: '__config__.count',
-    component: 'n-input-number',
-    props: {
+    tag: 'n-input-number',
+    tagType: 'Number',
+    __vModel__: '__config__.count',
+    __layout__: {},
+    __config__: {
       defaultValue: 5,
       clearable: true,
       buttonPlacement: 'both',
@@ -424,63 +573,95 @@ export const Rate = [
       precision: 0,
       setp: 1,
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '能否清空',
-    path: '__config__.clearable',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.clearable',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '是否只读',
-    path: '__config__.readonly',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.readonly',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
 ];
 export const Color = [
   {
     label: '展示透明度',
-    path: '__config__.showAlpha',
-    component: 'n-switch',
-    props: {
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.showAlpha',
+    __layout__: {},
+    __config__: {
       defaultValue: true,
     },
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '展示预览块',
-    path: '__config__.showPreview',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.showPreview',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '支持颜色格式',
-    path: '__config__.modes',
-    component: 'n-checkbox-group',
-    props: {
+    tag: 'n-checkbox-group',
+    tagType: 'Checkbox',
+    __vModel__: '__config__.modes',
+    __layout__: {},
+    __config__: {
       defaultValue: ['rgb', 'hex', 'hsl'],
     },
-    slot: {
-      space: {},
-      options: [
-        { label: 'rgb', value: 'rgb' },
-        { label: 'hex', value: 'hex' },
-        { label: 'hsl', value: 'hsl' },
-        { label: 'hsv', value: 'hsv' },
-      ],
+    __slot__: {
+      default: {
+        type: 'button',
+        space: {},
+        options: [
+          { label: 'rgb', value: 'rgb' },
+          { label: 'hex', value: 'hex' },
+          { label: 'hsl', value: 'hsl' },
+          { label: 'hsv', value: 'hsv' },
+        ],
+      },
     },
+    __rules__: [],
   },
 
   {
     label: '能否清空',
-    path: '__config__.clearable',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.clearable',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
   {
     label: '是否只读',
-    path: '__config__.readonly',
-    component: 'n-switch',
-    props: {},
+    tag: 'n-switch',
+    tagType: 'Switch',
+    __vModel__: '__config__.readonly',
+    __layout__: {},
+    __config__: {},
+    __slot__: {},
+    __rules__: [],
   },
 ];

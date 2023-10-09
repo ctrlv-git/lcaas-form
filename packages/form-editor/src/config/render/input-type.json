@@ -1,10 +1,10 @@
 {
-  "input": {
+  "Input": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "单行文本",
     "tag": "n-input-group",
-    "tagType": "input",
+    "tagType": "Input",
     "__layout__": {
       "span": 24
     },
@@ -19,12 +19,12 @@
     },
     "__rules__": []
   },
-  "textarea": {
+  "Textarea": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "多行文本",
     "tag": "n-input",
-    "tagType": "textarea",
+    "tagType": "Textarea",
     "__layout__": {
       "span": 24
     },
@@ -41,12 +41,12 @@
     },
     "__rules__": []
   },
-  "password": {
+  "Password": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "密码",
     "tag": "n-input-group",
-    "tagType": "password",
+    "tagType": "Password",
     "__layout__": {
       "span": 24
     },
@@ -65,12 +65,12 @@
     },
     "__rules__": []
   },
-  "number": {
+  "Number": {
     "__uuid__": "",
     "__vModel__": "",
     "label": "计数器",
     "tag": "n-input-number",
-    "tagType": "number",
+    "tagType": "Number",
     "__layout__": {
       "span": 24
     },
