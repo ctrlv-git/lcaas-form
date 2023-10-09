@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "pnpm --filter @lcaas/form-editor run dev",
     "build": "pnpm --filter ./packages/** run build",
+    "build:editor": "pnpm --filter @lcaas/form-editor run build",
     "build:render": "pnpm --filter @lcaas/form-render run build",
     "lint": "pnpm --filter ./packages/** run lint"
   },

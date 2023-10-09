@@ -1,4 +1,4 @@
-import { defineComponent, h, mergeProps, resolveComponent, PropType } from 'vue';
+import { PropType, defineComponent, h, mergeProps, resolveComponent } from 'vue';
 import { componenSlots } from './slots';
 
 function buildSlot(conf, componenProps) {
@@ -25,7 +25,8 @@ function buildSlot(conf, componenProps) {
 }
 // 处理控件事件
 function parseProps(currentProps, conf: FormItemConf, { props, emit }) {
-  const { tagType, __config__ } = conf;
+  const { tagType, __config__, __emits__ = {} } = conf;
+
   if (['Date', 'Time'].includes(tagType)) {
     //
     if (__config__.valueFormat) {
@@ -33,19 +34,27 @@ function parseProps(currentProps, conf: FormItemConf, { props, emit }) {
       currentProps['onUpdate:formatted-value'] = (val) => {
         currentProps['value-format'] = val;
         emit('update:value', val);
+        parseEmits(__emits__, val, props);
       };
       return currentProps;
     }
   }
+
   // 默认
   currentProps.value = props.value;
   currentProps['onUpdate:value'] = (val) => {
     currentProps.value = val;
     emit('update:value', val);
+    parseEmits(__emits__, val, props);
   };
   return currentProps;
 }
-
+function parseEmits(emits: any = '', val: any, props: any) {
+  const formData = props.model;
+  Object.values(emits).forEach((callback: any) => {
+    callback(val, formData);
+  });
+}
 export interface FormItemConf {
   __uuid__: string;
   __vModel__: string;
@@ -56,6 +65,7 @@ export interface FormItemConf {
   __config__: Record<string, unknown>;
   __slot__: Record<string, unknown>;
   __rules__: Record<string, unknown>[];
+  __emits__: Record<string, unknown>;
 }
 
 export default defineComponent({
@@ -66,25 +76,34 @@ export default defineComponent({
       required: false,
       default: undefined,
     },
+    model: {
+      type: Object as PropType<any>,
+      required: false,
+    },
     conf: {
       type: Object as PropType<FormItemConf>,
       required: true,
     },
   },
   emits: ['update:value'],
-  setup(props, { attrs, emit }) {
+  setup(props, { attrs, slots, emit }) {
     // 返回渲染函数
     return () => {
-      const { __config__, tag } = props.conf || {};
+      const { __config__, tag, tagType } = props.conf || {};
 
-      const componen = resolveComponent(tag);
+      if (tagType.toLocaleLowerCase() === 'custom') {
+        const slot = slots[tag];
+        return slot && h(slot, { value: props.value });
+      } else {
+        const componen = resolveComponent(tag);
 
-      let componenProps = mergeProps(__config__, attrs);
-      componenProps = parseProps(componenProps, props.conf, { props, emit });
+        let componenProps = mergeProps(__config__, attrs);
+        componenProps = parseProps(componenProps, props.conf, { props, emit });
 
-      const componenSlot = buildSlot(props.conf, componenProps) as any;
+        const componenSlot = buildSlot(props.conf, componenProps) as any;
 
-      return h(componen, componenProps, componenSlot);
+        return h(componen, componenProps, componenSlot);
+      }
     };
   },
 });

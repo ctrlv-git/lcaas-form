@@ -8,7 +8,12 @@
         :label="element.label"
         :path="element.__vModel__"
       >
-        <form-item v-model:value="formValue[element.__vModel__]" :conf="element" @update:value="bindUpdate"></form-item>
+        <form-item
+          v-model:value="formValue[element.__vModel__]"
+          :model="formValue"
+          :conf="element"
+          @update:value="bindUpdate"
+        ></form-item>
       </n-form-item-gi>
     </n-grid>
   </n-form>
