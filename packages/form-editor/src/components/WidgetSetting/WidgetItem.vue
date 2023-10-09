@@ -3,7 +3,8 @@
     :label="conf.label"
     :style="{
       '--n-feedback-font-size': '12px',
-      '--n-feedback-height': '16px',
+      '--n-feedback-height': '18px',
+      '--n-feedback-padding': '1px 2px 2px',
     }"
     :show-label="conf.tagType !== 'Custom'"
     :label-style="
