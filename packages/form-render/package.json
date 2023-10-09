@@ -1,8 +1,12 @@
 {
   "name": "@lcaas/form-render",
-  "version": "1.0.0",
-  "keywords": [],
-  "description": "Low code as a service",
+  "version": "0.0.1",
+  "keywords": [
+    "naive-ui动态表单",
+    "低代码表单",
+    "Vue3动态表单"
+  ],
+  "description": "@lcaas/form-editor的表单渲染器",
   "author": "yangzhuqing <470704012@qq.com>",
   "type": "module",
   "files": [
@@ -21,6 +25,14 @@
     "lint": "eslint --ext .js,.ts,.vue src",
     "build:dev": "vite build -w",
     "build": "vite build"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/ctrlc-git/lcaas-form.git"
   },
   "engines": {
     "node": ">=16.14.0",
