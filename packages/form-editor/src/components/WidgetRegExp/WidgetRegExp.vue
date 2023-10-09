@@ -12,7 +12,15 @@
       <n-button class="rule-delete" text @click="() => bindRemoveRule(i)">
         <n-icon size="18" :component="MdCloseCircleOutline" />
       </n-button>
-      <n-form-item label="表达式" label-width="5em">
+      <n-form-item
+        label="表达式"
+        label-width="5em"
+        :style="{
+          '--n-feedback-font-size': '12px',
+          '--n-feedback-height': '18px',
+          '--n-feedback-padding': '1px 2px 2px',
+        }"
+      >
         <n-select
           v-model:value="rule.pattern"
           :options="patternEnum"
@@ -22,7 +30,15 @@
           placeholder="可输入正则，如：/\\d+/"
         />
       </n-form-item>
-      <n-form-item label="错误提示" label-width="5em">
+      <n-form-item
+        label="错误提示"
+        label-width="5em"
+        :style="{
+          '--n-feedback-font-size': '12px',
+          '--n-feedback-height': '18px',
+          '--n-feedback-padding': '1px 2px 2px',
+        }"
+      >
         <n-input v-model:value="rule.message" clearable />
       </n-form-item>
     </div>
@@ -68,7 +84,6 @@ const bindRemoveRule = (index) => {
   width: 100%;
   flex: 1 1 auto;
   .n-form-item:not(.n-form-item:last-child) {
-    margin-bottom: 10px;
   }
 }
 .rule-item {
